@@ -75,6 +75,13 @@
   --radius-xl: calc(var(--radius) + 6px);
 }
 
+@utility text-gradient {
+  background: linear-gradient(120deg, #fff 20%, var(--primary) 54%, var(--accent) 90%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
