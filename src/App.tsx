@@ -1,6 +1,7 @@
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { Hero } from '@/sections/Hero'
+import { Impact } from '@/sections/Impact'
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <Navbar />
       <main>
         <Hero />
+        <Impact />
       </main>
       <Footer />
     </>
