@@ -68,6 +68,7 @@ export function Hero() {
             </span>
           </div>
 
+          {/* eslint-disable react/jsx-no-comment-textnodes, react/no-unescaped-entities -- decorative fake code snippet, not real JSX comments/prose */}
           <div className="px-6 pt-6 pb-7.5 font-mono text-xs leading-[2] text-[#c8d0dc]">
             <div className="text-[#657188]">// how I build</div>
             <div>
@@ -99,6 +100,7 @@ export function Hero() {
               <span className="text-[#f2bd7b]">"build → measure → improve"</span>;
             </div>
           </div>
+          {/* eslint-enable react/jsx-no-comment-textnodes, react/no-unescaped-entities */}
         </Reveal>
       </Container>
     </section>
