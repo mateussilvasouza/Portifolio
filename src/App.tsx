@@ -4,6 +4,7 @@ import { Hero } from '@/sections/Hero'
 import { Impact } from '@/sections/Impact'
 import { Thinking } from '@/sections/Thinking'
 import { Cases } from '@/sections/Cases'
+import { Toolkit } from '@/sections/Toolkit'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Impact />
         <Thinking />
         <Cases />
+        <Toolkit />
       </main>
       <Footer />
     </>
