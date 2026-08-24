@@ -12,7 +12,7 @@ export function Cases() {
           <SectionHeading
             kicker="03 / cases"
             title="Problema → decisão → resultado."
-            description="Quatro situações que representam melhor minha experiência do que uma simples lista de skills."
+            description="Cinco situações que representam melhor minha experiência do que uma simples lista de skills."
           />
 
           <div className="grid grid-cols-1 gap-[17px] lg:grid-cols-2">
