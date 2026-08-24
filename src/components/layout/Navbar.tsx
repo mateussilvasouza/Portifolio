@@ -1,10 +1,10 @@
 import { Container } from '@/components/layout/Container'
 
 const navLinks = [
-  { href: '#impacto', label: 'impacto' },
-  { href: '#pensamento', label: 'engenharia' },
-  { href: '#cases', label: 'cases' },
-  { href: '#experiencia', label: 'experiência' },
+  { href: '#impacto', label: 'Impacto' },
+  { href: '#pensamento', label: 'Engenharia' },
+  { href: '#cases', label: 'Cases' },
+  { href: '#experiencia', label: 'Experiência' },
 ]
 
 export function Navbar() {
