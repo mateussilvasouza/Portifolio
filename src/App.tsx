@@ -3,6 +3,7 @@ import { Footer } from '@/components/layout/Footer'
 import { Hero } from '@/sections/Hero'
 import { Impact } from '@/sections/Impact'
 import { Thinking } from '@/sections/Thinking'
+import { Cases } from '@/sections/Cases'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Hero />
         <Impact />
         <Thinking />
+        <Cases />
       </main>
       <Footer />
     </>
