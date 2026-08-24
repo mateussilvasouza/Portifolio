@@ -6,6 +6,7 @@ import { Thinking } from '@/sections/Thinking'
 import { Cases } from '@/sections/Cases'
 import { Toolkit } from '@/sections/Toolkit'
 import { Experience } from '@/sections/Experience'
+import { Contact } from '@/sections/Contact'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Cases />
         <Toolkit />
         <Experience />
+        <Contact />
       </main>
       <Footer />
     </>
