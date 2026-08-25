@@ -60,7 +60,7 @@ export default async function BlogPostPage({
         {post.tags.length > 0 && <span>{post.tags.join(' · ')}</span>}
       </div>
 
-      <div className="mt-10 max-w-[720px]">
+      <div className="mt-10">
         <MarkdownContent content={post.content} />
       </div>
     </Container>

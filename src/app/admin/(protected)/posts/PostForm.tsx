@@ -130,7 +130,10 @@ export function PostForm({
   }
 
   return (
-    <form action={action} className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+    <form
+      action={action}
+      className="grid grid-cols-1 items-start gap-8 lg:grid-cols-2"
+    >
       <div className="grid gap-4">
         <div className="rounded-lg border border-dashed p-4">
           <label className="text-xs text-muted-foreground">
@@ -346,9 +349,9 @@ export function PostForm({
         </Button>
       </div>
 
-      <div>
+      <div className="sticky top-20">
         <label className="text-xs text-muted-foreground">Preview</label>
-        <div className="mt-1 rounded-lg border bg-white/2.5 px-5 py-4 text-sm">
+        <div className="mt-1 max-h-[calc(100vh-6.5rem)] overflow-y-auto rounded-lg border bg-white/2.5 px-5 py-4 text-sm">
           <MarkdownContent content={content || '_o preview aparece aqui_'} />
         </div>
       </div>
