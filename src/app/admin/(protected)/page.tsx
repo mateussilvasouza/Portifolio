@@ -5,6 +5,8 @@ import { posts } from '@/db/schema'
 import { Button } from '@/components/ui/button'
 import { deletePost } from './posts/actions'
 
+export const dynamic = 'force-dynamic'
+
 export default async function AdminDashboard() {
   const allPosts = await db.select().from(posts).orderBy(desc(posts.publishedAt))
 
