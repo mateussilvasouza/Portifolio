@@ -3,9 +3,12 @@
 import { eq } from 'drizzle-orm'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
+import { del } from '@vercel/blob'
 import { db } from '@/db'
 import { posts, postCategory } from '@/db/schema'
+import { getPostById } from '@/db/queries'
 import { requireSession } from '@/lib/session'
+import { extractBlobUrls } from '@/lib/extract-blob-urls'
 
 function parsePostForm(formData: FormData) {
   const category = formData.get('category')
@@ -59,7 +62,20 @@ export async function updatePost(id: number, formData: FormData) {
 export async function deletePost(id: number) {
   await requireSession()
 
+  const post = await getPostById(id)
+
   await db.delete(posts).where(eq(posts.id, id))
+
+  if (post) {
+    const blobUrls = extractBlobUrls(post.content)
+    await Promise.all(
+      blobUrls.map((url) =>
+        del(url).catch((error) =>
+          console.error(`Failed to delete blob ${url}:`, error),
+        ),
+      ),
+    )
+  }
 
   revalidatePublicBlogPaths()
 }
