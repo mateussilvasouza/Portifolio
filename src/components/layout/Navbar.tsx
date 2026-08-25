@@ -8,7 +8,7 @@ const navLinks = [
   { href: '/#pensamento', label: 'Engenharia' },
   { href: '/#cases', label: 'Cases' },
   { href: '/#experiencia', label: 'Experiência' },
-  { href: '/#projetos', label: 'Projetos' },
+  { href: '/projetos', label: 'Projetos' },
   { href: '/blog', label: 'Blog' },
 ]
 
