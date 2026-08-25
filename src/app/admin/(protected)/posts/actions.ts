@@ -31,12 +31,19 @@ function parsePostForm(formData: FormData) {
   }
 }
 
+function revalidatePublicBlogPaths() {
+  revalidatePath('/admin')
+  revalidatePath('/')
+  revalidatePath('/blog')
+  revalidatePath('/blog/[slug]', 'page')
+}
+
 export async function createPost(formData: FormData) {
   await requireSession()
 
   await db.insert(posts).values(parsePostForm(formData))
 
-  revalidatePath('/admin')
+  revalidatePublicBlogPaths()
   redirect('/admin')
 }
 
@@ -45,7 +52,7 @@ export async function updatePost(id: number, formData: FormData) {
 
   await db.update(posts).set(parsePostForm(formData)).where(eq(posts.id, id))
 
-  revalidatePath('/admin')
+  revalidatePublicBlogPaths()
   redirect('/admin')
 }
 
@@ -54,5 +61,5 @@ export async function deletePost(id: number) {
 
   await db.delete(posts).where(eq(posts.id, id))
 
-  revalidatePath('/admin')
+  revalidatePublicBlogPaths()
 }
