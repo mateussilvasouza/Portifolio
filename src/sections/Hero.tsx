@@ -35,7 +35,7 @@ export function Hero() {
 
           <div className="mt-7.5 flex flex-wrap gap-2.5">
             <Button variant="gradient" size="lg" asChild>
-              <a href="#cases">Explorar minha engenharia ↓</a>
+              <a href="#cases">Ver meus cases ↓</a>
             </Button>
             <Button variant="outline" size="lg" asChild>
               <a href="#contato">Entrar em contato</a>
