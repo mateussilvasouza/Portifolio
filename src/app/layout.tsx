@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'Mateus Silva Souza — Software Engineer',
   description:
     'Mateus Silva Souza — Desenvolvedor Full Stack. APIs, microsserviços, arquitetura, performance e produtos em produção.',
-  icons: { icon: '/favicon.svg' },
+  icons: { icon: '/favicon.png' },
 }
 
 export const viewport: Viewport = {
