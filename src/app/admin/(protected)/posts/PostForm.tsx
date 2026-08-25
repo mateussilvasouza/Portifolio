@@ -1,9 +1,9 @@
 'use client'
 
 import { useMemo, useRef, useState } from 'react'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+import { upload } from '@vercel/blob/client'
 import { Button } from '@/components/ui/button'
+import { MarkdownContent } from '@/components/MarkdownContent'
 import { postCategory } from '@/db/schema'
 import { slugify } from '@/lib/slugify'
 import { estimateReadingTime } from '@/lib/reading-time'
@@ -57,6 +57,10 @@ export function PostForm({
   const [importText, setImportText] = useState('')
   const importFileInputRef = useRef<HTMLInputElement>(null)
 
+  const contentRef = useRef<HTMLTextAreaElement>(null)
+  const mediaFileInputRef = useRef<HTMLInputElement>(null)
+  const [uploadingMedia, setUploadingMedia] = useState(false)
+
   const suggestedReadingTime = useMemo(
     () => estimateReadingTime(content),
     [content],
@@ -84,6 +88,45 @@ export function PostForm({
 
   async function handleImportFile(file: File) {
     applyImport(await file.text())
+  }
+
+  function insertAtCursor(insertion: string) {
+    const textarea = contentRef.current
+    if (!textarea) {
+      setContent((c) => c + insertion)
+      return
+    }
+
+    const start = textarea.selectionStart
+    const end = textarea.selectionEnd
+    const next = content.slice(0, start) + insertion + content.slice(end)
+    setContent(next)
+
+    requestAnimationFrame(() => {
+      textarea.focus()
+      const pos = start + insertion.length
+      textarea.setSelectionRange(pos, pos)
+    })
+  }
+
+  async function handleMediaUpload(file: File) {
+    setUploadingMedia(true)
+    try {
+      const blob = await upload(file.name, file, {
+        access: 'public',
+        handleUploadUrl: '/api/blob/upload',
+      })
+      const alt = file.name.replace(/\.[^.]+$/, '')
+      insertAtCursor(`![${alt}](${blob.url})\n`)
+    } catch (error) {
+      alert(
+        error instanceof Error
+          ? `Falha no upload: ${error.message}`
+          : 'Falha no upload.',
+      )
+    } finally {
+      setUploadingMedia(false)
+    }
   }
 
   return (
@@ -262,10 +305,33 @@ export function PostForm({
         </div>
 
         <div>
-          <label className="text-xs text-muted-foreground">
-            Conteúdo (markdown)
-          </label>
+          <div className="flex items-center justify-between">
+            <label className="text-xs text-muted-foreground">
+              Conteúdo (markdown)
+            </label>
+            <Button
+              type="button"
+              variant="outline"
+              size="xs"
+              disabled={uploadingMedia}
+              onClick={() => mediaFileInputRef.current?.click()}
+            >
+              {uploadingMedia ? 'Enviando...' : 'Adicionar mídia'}
+            </Button>
+            <input
+              ref={mediaFileInputRef}
+              type="file"
+              accept="image/*,video/*"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0]
+                if (file) handleMediaUpload(file)
+                e.target.value = ''
+              }}
+            />
+          </div>
           <textarea
+            ref={contentRef}
             name="content"
             required
             rows={16}
@@ -282,10 +348,8 @@ export function PostForm({
 
       <div>
         <label className="text-xs text-muted-foreground">Preview</label>
-        <div className="prose prose-invert mt-1 max-w-none rounded-lg border bg-white/2.5 px-5 py-4 text-sm">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {content || '_o preview aparece aqui_'}
-          </ReactMarkdown>
+        <div className="mt-1 rounded-lg border bg-white/2.5 px-5 py-4 text-sm">
+          <MarkdownContent content={content || '_o preview aparece aqui_'} />
         </div>
       </div>
     </form>

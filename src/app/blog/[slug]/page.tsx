@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
 import { Container } from '@/components/layout/Container'
+import { MarkdownContent } from '@/components/MarkdownContent'
 import { getPostBySlug } from '@/db/queries'
 
 function formatDate(date: Date) {
@@ -61,10 +60,8 @@ export default async function BlogPostPage({
         {post.tags.length > 0 && <span>{post.tags.join(' · ')}</span>}
       </div>
 
-      <div className="prose prose-invert mt-10 max-w-[720px]">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-          {post.content}
-        </ReactMarkdown>
+      <div className="mt-10 max-w-[720px]">
+        <MarkdownContent content={post.content} />
       </div>
     </Container>
   )
