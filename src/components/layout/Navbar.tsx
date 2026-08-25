@@ -4,10 +4,10 @@ import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/button'
 
 const navLinks = [
-  { href: '#impacto', label: 'Impacto' },
-  { href: '#pensamento', label: 'Engenharia' },
-  { href: '#cases', label: 'Cases' },
-  { href: '#experiencia', label: 'Experiência' },
+  { href: '/#impacto', label: 'Impacto' },
+  { href: '/#pensamento', label: 'Engenharia' },
+  { href: '/#cases', label: 'Cases' },
+  { href: '/#experiencia', label: 'Experiência' },
   { href: '/blog', label: 'Blog' },
 ]
 
@@ -15,30 +15,20 @@ export function Navbar() {
   return (
     <nav className="sticky top-0 z-100 h-[72px] border-b border-border bg-background/72 backdrop-blur-xl">
       <Container className="flex h-full items-center justify-between">
-        <a href="#sobre" className="font-black tracking-[-0.055em]">
-          mateus<span className="text-accent not-italic">.dev</span>
-        </a>
+        <Link href="/#sobre" className="font-black tracking-[-0.055em]">
+          Mateus Souza<span className="text-accent not-italic">.Dev</span>
+        </Link>
 
-        <div className="hidden gap-6.5 text-xs text-muted-foreground md:flex">
-          {navLinks.map((link) =>
-            link.href.startsWith('#') ? (
-              <a
-                key={link.href}
-                href={link.href}
-                className="transition-colors hover:text-foreground"
-              >
-                {link.label}
-              </a>
-            ) : (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="transition-colors hover:text-foreground"
-              >
-                {link.label}
-              </Link>
-            ),
-          )}
+        <div className="hidden gap-6.5 text-xs text-muted-foreground md:flex lg:gap-8 lg:text-sm">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="transition-colors hover:text-foreground"
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
 
         <div className="flex items-center gap-2">

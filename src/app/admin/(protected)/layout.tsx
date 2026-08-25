@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/button'
 import { logout } from './actions'
 
@@ -9,12 +10,8 @@ export default function AdminLayout({
 }) {
   return (
     <div>
-      <nav className="flex h-16 items-center justify-between border-b px-6">
-        <Link href="/admin" className="font-black tracking-[-0.055em]">
-          admin<span className="text-accent">.</span>
-        </Link>
-
-        <div className="flex items-center gap-3">
+      <nav className="border-b">
+        <Container className="flex h-16 w-[min(960px,calc(100%-42px))] items-center justify-end gap-3">
           <Button variant="outline" size="sm" asChild>
             <Link href="/admin/posts/new">Novo post</Link>
           </Button>
@@ -23,7 +20,7 @@ export default function AdminLayout({
               Sair
             </Button>
           </form>
-        </div>
+        </Container>
       </nav>
 
       <main className="mx-auto w-[min(960px,calc(100%-42px))] py-10">
