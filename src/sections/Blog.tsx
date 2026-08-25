@@ -16,11 +16,11 @@ export async function Blog() {
   if (allPosts.length === 0) return null
 
   return (
-    <section id="blog" className="border-t border-b bg-white/[0.018] py-[70px] sm:py-[105px]">
+    <section id="blog" className="py-[70px] sm:py-[105px]">
       <Container>
         <Reveal>
           <SectionHeading
-            kicker="07 / blog"
+            kicker="08 / blog"
             title="Ideias, experiências e aprendizados."
             description="Um espaço para compartilhar o que aprendi construindo software: frontend, backend, arquitetura, performance, cloud e os problemas que aparecem no mundo real."
           />

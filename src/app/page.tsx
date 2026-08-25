@@ -5,6 +5,7 @@ import { Cases } from '@/sections/Cases'
 import { Toolkit } from '@/sections/Toolkit'
 import { Experience } from '@/sections/Experience'
 import { Contact } from '@/sections/Contact'
+import { Projects } from '@/sections/Projects'
 import { Blog } from '@/sections/Blog'
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
       <Toolkit />
       <Experience />
       <Contact />
+      <Projects />
       <Blog />
     </main>
   )

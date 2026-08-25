@@ -8,6 +8,7 @@ const navLinks = [
   { href: '/#pensamento', label: 'Engenharia' },
   { href: '/#cases', label: 'Cases' },
   { href: '/#experiencia', label: 'Experiência' },
+  { href: '/#projetos', label: 'Projetos' },
   { href: '/blog', label: 'Blog' },
 ]
 
@@ -33,7 +34,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" asChild>
-            <a href="Curriculo_Mateus_Final_v3.docx" download>
+            <a href="Currículo.pdf" download>
               <Download />
               Download CV
             </a>
