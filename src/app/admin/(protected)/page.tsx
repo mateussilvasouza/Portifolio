@@ -1,14 +1,12 @@
 import Link from 'next/link'
-import { desc } from 'drizzle-orm'
-import { db } from '@/db'
-import { posts } from '@/db/schema'
+import { getAllPosts } from '@/db/queries'
 import { Button } from '@/components/ui/button'
 import { deletePost } from './posts/actions'
 
 export const dynamic = 'force-dynamic'
 
 export default async function AdminDashboard() {
-  const allPosts = await db.select().from(posts).orderBy(desc(posts.publishedAt))
+  const allPosts = await getAllPosts()
 
   return (
     <div>
