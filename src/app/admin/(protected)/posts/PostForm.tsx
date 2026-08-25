@@ -1,11 +1,13 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Button } from '@/components/ui/button'
 import { postCategory } from '@/db/schema'
 import { slugify } from '@/lib/slugify'
+import { estimateReadingTime } from '@/lib/reading-time'
+import { parseMarkdownImport } from '@/lib/markdown-import'
 
 export interface PostFormValues {
   title: string
@@ -31,11 +33,6 @@ const emptyValues: PostFormValues = {
   publishedAt: new Date().toISOString().slice(0, 10),
 }
 
-function estimateReadingTime(content: string) {
-  const words = content.trim().split(/\s+/).filter(Boolean).length
-  return Math.max(1, Math.round(words / 200))
-}
-
 export function PostForm({
   action,
   initialValues,
@@ -48,18 +45,99 @@ export function PostForm({
   const [title, setTitle] = useState(values.title)
   const [slug, setSlug] = useState(values.slug)
   const [slugTouched, setSlugTouched] = useState(Boolean(values.slug))
+  const [excerpt, setExcerpt] = useState(values.excerpt)
+  const [category, setCategory] = useState(values.category)
+  const [tagsText, setTagsText] = useState(values.tags.join(', '))
+  const [featured, setFeatured] = useState(values.featured)
+  const [publishedAt, setPublishedAt] = useState(values.publishedAt)
   const [content, setContent] = useState(values.content)
   const [readingTime, setReadingTime] = useState(values.readingTimeMinutes)
   const [readingTimeTouched, setReadingTimeTouched] = useState(false)
+
+  const [importText, setImportText] = useState('')
+  const importFileInputRef = useRef<HTMLInputElement>(null)
 
   const suggestedReadingTime = useMemo(
     () => estimateReadingTime(content),
     [content],
   )
 
+  function applyImport(raw: string) {
+    const parsed = parseMarkdownImport(raw)
+    if (parsed.title !== undefined) setTitle(parsed.title)
+    if (parsed.slug !== undefined) {
+      setSlug(parsed.slug)
+      setSlugTouched(true)
+    }
+    if (parsed.excerpt !== undefined) setExcerpt(parsed.excerpt)
+    if (parsed.category !== undefined) setCategory(parsed.category)
+    if (parsed.tags !== undefined) setTagsText(parsed.tags.join(', '))
+    if (parsed.readingTimeMinutes !== undefined) {
+      setReadingTime(parsed.readingTimeMinutes)
+      setReadingTimeTouched(true)
+    }
+    if (parsed.featured !== undefined) setFeatured(parsed.featured)
+    if (parsed.publishedAt !== undefined) setPublishedAt(parsed.publishedAt)
+    if (parsed.content !== undefined) setContent(parsed.content)
+    setImportText('')
+  }
+
+  async function handleImportFile(file: File) {
+    applyImport(await file.text())
+  }
+
   return (
     <form action={action} className="grid grid-cols-1 gap-8 lg:grid-cols-2">
       <div className="grid gap-4">
+        <div className="rounded-lg border border-dashed p-4">
+          <label className="text-xs text-muted-foreground">
+            Importar de markdown (opcional) — arquivo .md ou colar o texto
+            (frontmatter preenche os campos, o resto é sugerido)
+          </label>
+
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => importFileInputRef.current?.click()}
+            >
+              Selecionar arquivo .md
+            </Button>
+            <input
+              ref={importFileInputRef}
+              type="file"
+              accept=".md,.markdown,text/markdown"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0]
+                if (file) handleImportFile(file)
+                e.target.value = ''
+              }}
+            />
+          </div>
+
+          <textarea
+            value={importText}
+            onChange={(e) => setImportText(e.target.value)}
+            placeholder={
+              '--- frontmatter opcional ---\ntitle: ...\ncategory: Frontend\ntags: React, TypeScript\n---\n\nou só cole o corpo em markdown'
+            }
+            rows={3}
+            className="mt-2 w-full rounded-lg border bg-white/2.5 px-3.5 py-2.5 font-mono text-xs outline-none focus:border-primary/50"
+          />
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="mt-2"
+            disabled={!importText.trim()}
+            onClick={() => applyImport(importText)}
+          >
+            Preencher formulário
+          </Button>
+        </div>
+
         <div>
           <label className="text-xs text-muted-foreground">Título</label>
           <input
@@ -94,7 +172,8 @@ export function PostForm({
             name="excerpt"
             required
             rows={3}
-            defaultValue={values.excerpt}
+            value={excerpt}
+            onChange={(e) => setExcerpt(e.target.value)}
             className="mt-1 w-full rounded-lg border bg-white/2.5 px-3.5 py-2.5 text-sm outline-none focus:border-primary/50"
           />
         </div>
@@ -106,12 +185,15 @@ export function PostForm({
             </label>
             <select
               name="category"
-              defaultValue={values.category}
+              value={category}
+              onChange={(e) =>
+                setCategory(e.target.value as PostFormValues['category'])
+              }
               className="mt-1 w-full rounded-lg border bg-white/2.5 px-3.5 py-2.5 text-sm outline-none focus:border-primary/50"
             >
-              {postCategory.enumValues.map((category) => (
-                <option key={category} value={category}>
-                  {category}
+              {postCategory.enumValues.map((c) => (
+                <option key={c} value={c}>
+                  {c}
                 </option>
               ))}
             </select>
@@ -125,7 +207,8 @@ export function PostForm({
               type="date"
               name="publishedAt"
               required
-              defaultValue={values.publishedAt}
+              value={publishedAt}
+              onChange={(e) => setPublishedAt(e.target.value)}
               className="mt-1 w-full rounded-lg border bg-white/2.5 px-3.5 py-2.5 text-sm outline-none focus:border-primary/50"
             />
           </div>
@@ -137,7 +220,8 @@ export function PostForm({
           </label>
           <input
             name="tags"
-            defaultValue={values.tags.join(', ')}
+            value={tagsText}
+            onChange={(e) => setTagsText(e.target.value)}
             className="mt-1 w-full rounded-lg border bg-white/2.5 px-3.5 py-2.5 text-sm outline-none focus:border-primary/50"
           />
         </div>
@@ -170,7 +254,8 @@ export function PostForm({
             <input
               type="checkbox"
               name="featured"
-              defaultChecked={values.featured}
+              checked={featured}
+              onChange={(e) => setFeatured(e.target.checked)}
             />
             Destaque
           </label>
