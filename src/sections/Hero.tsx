@@ -7,7 +7,7 @@ const pipeline = [
   ['ReactJs', 'NextJs'],
   ['NodeJs', 'NestJS'],
   ['CI/CD','AWS'],
-  ['Monolitic', 'Microsservice'],
+  ['Monolithic', 'Microsservice'],
   ['Development','Production']
 ]
 
