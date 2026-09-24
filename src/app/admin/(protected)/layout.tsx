@@ -15,6 +15,9 @@ export default function AdminLayout({
           <Button variant="outline" size="sm" asChild>
             <Link href="/admin/posts/new">Novo post</Link>
           </Button>
+          <Button variant="outline" size="sm" asChild>
+            <Link href="/admin/settings">Configurações</Link>
+          </Button>
           <form action={logout}>
             <Button variant="outline" size="sm" type="submit">
               Sair
