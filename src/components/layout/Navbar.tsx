@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Download, Lock } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/button'
+import { getSetting } from '@/db/queries'
 
 const navLinks = [
   { href: '/#impacto', label: 'Impacto' },
@@ -12,7 +13,9 @@ const navLinks = [
   { href: '/blog', label: 'Blog' },
 ]
 
-export function Navbar() {
+export async function Navbar() {
+  const cvUrl = (await getSetting('cv_url')) ?? 'Currículo.pdf'
+
   return (
     <nav className="sticky top-0 z-100 h-[72px] border-b border-border bg-background/72 backdrop-blur-xl">
       <Container className="flex h-full items-center justify-between">
@@ -34,7 +37,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" asChild>
-            <a href="Currículo.pdf" download>
+            <a href={cvUrl} download>
               <Download />
               Download CV
             </a>
