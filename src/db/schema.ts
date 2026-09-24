@@ -16,6 +16,12 @@ export const postCategory = pgEnum('post_category', [
   'Carreira',
 ])
 
+export const settings = pgTable('settings', {
+  key: text().primaryKey(),
+  value: text().notNull(),
+  updatedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+})
+
 export const posts = pgTable('posts', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   slug: text().notNull().unique(),
