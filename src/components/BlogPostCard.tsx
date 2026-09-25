@@ -24,16 +24,16 @@ export function BlogPostCard({
   return (
     <article
       className={cn(
-        "relative overflow-hidden rounded-[20px] border bg-gradient-to-br from-[rgba(17,23,34,.95)] to-[rgba(10,14,22,.88)] after:absolute after:right-[-70px] after:bottom-[-70px] after:h-[150px] after:w-[150px] after:rounded-full after:bg-accent/[0.06] after:blur-[2px] after:content-['']",
+        'rounded-lg border border-border bg-card transition-all duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:bg-background-2 hover:shadow-lift',
         featured ? 'p-9' : 'p-7',
       )}
     >
       <div className="flex items-center gap-2">
-        <small className="text-[9px] font-black tracking-[0.14em] text-accent uppercase">
+        <small className="font-mono text-xs tracking-[0.1em] text-accent uppercase">
           {post.category}
         </small>
         {featured && (
-          <span className="rounded-md bg-accent/10 px-1.5 py-0.5 text-[9px] font-bold text-accent uppercase">
+          <span className="rounded-sm bg-accent-soft px-1.5 py-0.5 font-mono text-[10px] font-medium text-accent uppercase">
             destaque
           </span>
         )}
@@ -41,7 +41,7 @@ export function BlogPostCard({
 
       <h3
         className={cn(
-          'my-2.5 tracking-[-0.03em]',
+          'my-2.5 font-display font-semibold tracking-[-0.02em]',
           featured ? 'text-[28px]' : 'text-xl',
         )}
       >
@@ -57,7 +57,7 @@ export function BlogPostCard({
         {post.excerpt}
       </p>
 
-      <div className="mt-4 flex flex-wrap gap-3 text-[10px] text-muted-foreground-2">
+      <div className="mt-4 flex flex-wrap gap-3 font-mono text-[11px] text-muted-foreground-2">
         <span>{formatDate(post.publishedAt)}</span>
         <span>{post.readingTimeMinutes} min de leitura</span>
         {post.tags.length > 0 && <span>{post.tags.join(' · ')}</span>}
@@ -65,7 +65,7 @@ export function BlogPostCard({
 
       <Link
         href={`/blog/${post.slug}`}
-        className="mt-5 inline-block text-[11px] font-extrabold text-accent"
+        className="mt-5 inline-block text-[13px] font-semibold text-foreground hover:text-accent"
       >
         Ler artigo →
       </Link>

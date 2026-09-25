@@ -20,7 +20,7 @@ export async function Blog() {
       <Container>
         <Reveal>
           <SectionHeading
-            kicker="08 / blog"
+            kicker="09 / blog"
             title="Ideias, experiências e aprendizados."
             description="Um espaço para compartilhar o que aprendi construindo software: frontend, backend, arquitetura, performance, cloud e os problemas que aparecem no mundo real."
           />

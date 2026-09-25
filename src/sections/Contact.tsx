@@ -11,7 +11,7 @@ export async function Contact() {
         <Reveal className="grid items-end gap-8 rounded-lg border border-border bg-card px-8 py-16 lg:grid-cols-[1fr_auto]">
           <div>
             <div className="font-mono text-xs tracking-[0.12em] text-accent uppercase">
-              06 / contato
+              08 / contato
             </div>
             <h2 className="mt-3 font-display text-[44px] leading-[0.95] font-bold tracking-[-0.035em] lg:text-[64px]">
               Vamos construir algo juntos?

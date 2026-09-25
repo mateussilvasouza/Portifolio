@@ -10,6 +10,8 @@ const navLinks = [
   { href: '/#pensamento', label: 'Como penso' },
   { href: '/#projetos', label: 'Projetos' },
   { href: '/#experiencia', label: 'Experiência' },
+  { href: '/#eventos', label: 'Eventos' },
+  { href: '/#fotos', label: 'Fotos' },
   { href: '/blog', label: 'Blog' },
 ]
 
