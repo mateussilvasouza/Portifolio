@@ -11,18 +11,32 @@ export default function AdminLayout({
   return (
     <div>
       <nav className="border-b">
-        <Container className="flex h-16 w-[min(960px,calc(100%-42px))] items-center justify-end gap-3">
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/admin/posts/new">Novo post</Link>
-          </Button>
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/admin/settings">Configurações</Link>
-          </Button>
-          <form action={logout}>
-            <Button variant="ghost" size="sm" type="submit">
-              Sair
+        <Container className="flex h-16 w-[min(960px,calc(100%-42px))] items-center justify-between gap-3">
+          <div className="flex items-center gap-1">
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/admin">Posts</Link>
             </Button>
-          </form>
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/admin/projects">Projetos</Link>
+            </Button>
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/admin/events">Eventos</Link>
+            </Button>
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/admin/contact">Contato</Link>
+            </Button>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/admin/settings">Configurações</Link>
+            </Button>
+            <form action={logout}>
+              <Button variant="ghost" size="sm" type="submit">
+                Sair
+              </Button>
+            </form>
+          </div>
         </Container>
       </nav>
 
