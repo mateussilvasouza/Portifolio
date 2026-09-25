@@ -1,5 +1,5 @@
 import { db } from './index'
-import { posts } from './schema'
+import { contactLinks, posts, projects } from './schema'
 
 /**
  * Content lifted from portfolio_blog_design.html. `content` has no source
@@ -100,14 +100,253 @@ const seedPosts: (typeof posts.$inferInsert)[] = [
   },
 ]
 
+/**
+ * Cargos de empresa viram cards "company" com o resumo do produto e o
+ * impacto (mesmo dado de src/data/experience.ts, condensado). Projetos de
+ * estudo vêm de repositórios reais no GitHub — cada `result` original virou
+ * a última frase da descrição para não perder o dado.
+ */
+const seedProjects: (typeof projects.$inferInsert)[] = [
+  {
+    kind: 'company',
+    title: 'SaaS jurídico de consulta processual',
+    company: 'Galgtec',
+    role: 'Full Stack',
+    period: '05/2025 — 05/2026',
+    description:
+      'Frontend em React/Next.js e integrações com APIs de tribunais brasileiros; simplificação da arquitetura serverless.',
+    stack: ['Next.js', 'React', 'AWS Lambda'],
+    links: [],
+    metricValue: '−30%',
+    metricLabel: 'funções Lambda',
+    privateNote: 'Código privado — produto público',
+    order: 0,
+  },
+  {
+    kind: 'company',
+    title: 'Plataforma de logística de alto volume',
+    company: 'Vai Fácil',
+    role: 'Sênior Full Stack',
+    period: '04/2022 — 05/2025',
+    description:
+      'Três apps React em produção, microsserviços NestJS, integrações com seguradoras e automações logísticas.',
+    stack: ['NestJS', 'PostgreSQL', 'RabbitMQ', 'React'],
+    links: [],
+    metricValue: '100k',
+    metricLabel: 'requisições por dia · SLA 97%',
+    privateNote: 'Código privado — produto público',
+    order: 1,
+  },
+  {
+    kind: 'study',
+    title: 'Fundamentos de Cloud com AWS',
+    period: 'GFT',
+    description:
+      'Dois laboratórios práticos do bootcamp GFT (Digital Innovation One): uma arquitetura DevOps com EC2, EKS e infraestrutura como código, e um pipeline serverless completo que exporta os 1025 Pokémon da PokeAPI para CSV, orquestrado com Step Functions. Pipeline validado localmente com LocalStack antes do deploy.',
+    stack: ['AWS', 'EC2', 'EKS', 'CloudFormation', 'Step Functions', 'Lambda'],
+    links: [
+      {
+        label: 'Código',
+        href: 'https://github.com/mateussilvasouza/GFT---Fundamentos-de-Cloud-com-AWS',
+        kind: 'github',
+      },
+    ],
+    order: 2,
+  },
+  {
+    kind: 'study',
+    title: 'Auth API',
+    period: '2024',
+    description:
+      'API de autenticação e autorização com JWT assinado em RS256 (chave privada/pública, não um segredo simétrico), hash de senha com bcrypt, upload de arquivos e cadastro de usuários em lote via CSV. RS256 em vez de HS256 — separa quem assina de quem verifica.',
+    stack: ['Node.js', 'TypeScript', 'Express', 'JWT', 'bcrypt'],
+    links: [
+      {
+        label: 'Código',
+        href: 'https://github.com/mateussilvasouza/Auth-Api',
+        kind: 'github',
+      },
+      {
+        label: 'Ver ao vivo',
+        href: 'https://auth-api-latest-ku3d.onrender.com',
+      },
+    ],
+    order: 3,
+  },
+  {
+    kind: 'study',
+    title: 'FindAFriend',
+    period: '2024',
+    description:
+      'API de adoção de animais aplicando SOLID e Clean Architecture: ONGs cadastram pets, adotantes filtram por cidade e características e falam direto no WhatsApp — com suíte completa de testes unitários e end-to-end. Repositórios in-memory nos testes unitários, Prisma/Postgres em produção.',
+    stack: ['Node.js', 'TypeScript', 'Fastify', 'Prisma', 'PostgreSQL', 'Vitest'],
+    links: [
+      {
+        label: 'Código',
+        href: 'https://github.com/mateussilvasouza/FindAFriend',
+        kind: 'github',
+      },
+    ],
+    order: 4,
+  },
+  {
+    kind: 'study',
+    title: 'Champions League API',
+    period: '2023',
+    description:
+      'API de jogadores, times e escalações da Champions League com dados reais da Sportmonks. O desafio original da DIO usava JSON fixo em memória — essa versão foi além, com Postgres, Docker e tratamento de erros centralizado.',
+    stack: ['Node.js', 'Express', 'TypeScript', 'PostgreSQL', 'TypeORM', 'Docker'],
+    links: [
+      {
+        label: 'Código',
+        href: 'https://github.com/mateussilvasouza/football-api',
+        kind: 'github',
+      },
+    ],
+    order: 5,
+  },
+  {
+    kind: 'study',
+    title: 'Telegram Files Toolkit',
+    description:
+      'Ferramenta desktop (Tkinter) para baixar e organizar arquivos trocados em conversas do Telegram: download em massa por formato/período, listagem individual com filtros, e cópia direta entre canais sem passar pelo disco. Processamento paralelo, com sincronização incremental entre execuções.',
+    stack: ['Python', 'Tkinter', 'Telegram API'],
+    links: [
+      {
+        label: 'Código',
+        href: 'https://github.com/mateussilvasouza/telegram-tool',
+        kind: 'github',
+      },
+    ],
+    order: 6,
+  },
+  {
+    kind: 'study',
+    title: 'Gerenciador de Podcasts',
+    description:
+      'API RESTful de gerenciamento de podcasts feita no bootcamp da DIO, em Node.js + TypeScript puro, sem framework — roteamento, middlewares e parsing de JSON escritos à mão, com persistência em SQLite via Turso. API construída sem framework — HTTP puro em camadas.',
+    stack: ['Node.js', 'TypeScript', 'SQLite', 'Turso'],
+    links: [
+      {
+        label: 'Código',
+        href: 'https://github.com/mateussilvasouza/gerenciador-de-podcasts',
+        kind: 'github',
+      },
+    ],
+    order: 7,
+  },
+  {
+    kind: 'study',
+    title: 'Timer',
+    description:
+      'Cronômetro de foco estilo Pomodoro: cria um ciclo com tarefa e duração, acompanha a contagem regressiva e mantém histórico de ciclos concluídos, interrompidos ou em andamento, persistido no navegador. Histórico de ciclos com persistência local via localStorage.',
+    stack: ['React', 'TypeScript', 'Vite', 'styled-components'],
+    links: [
+      {
+        label: 'Código',
+        href: 'https://github.com/mateussilvasouza/timer',
+        kind: 'github',
+      },
+      { label: 'Ver online', href: 'https://timer-gray-one.vercel.app' },
+    ],
+    order: 8,
+  },
+  {
+    kind: 'study',
+    title: 'Coffee Delivery',
+    description:
+      'E-commerce de entrega de café com carrinho e checkout, incluindo busca de endereço automática por CEP (ViaCEP) e geocodificação reversa (Nominatim). Checkout com endereço preenchido automaticamente por CEP.',
+    stack: ['React', 'TypeScript', 'Vite', 'styled-components'],
+    links: [
+      {
+        label: 'Código',
+        href: 'https://github.com/mateussilvasouza/coffee-delivery',
+        kind: 'github',
+      },
+      {
+        label: 'Ver online',
+        href: 'https://coffee-delivery-bay-kappa.vercel.app',
+      },
+    ],
+    order: 9,
+  },
+  {
+    kind: 'study',
+    title: 'Lista de Tarefas',
+    description:
+      'Aplicação de lista de tarefas em React — criar, editar, concluir e excluir tarefas, com interface simples. CRUD completo com edição e marcação de conclusão.',
+    stack: ['React', 'TypeScript'],
+    links: [
+      {
+        label: 'Código',
+        href: 'https://github.com/mateussilvasouza/todo-list',
+        kind: 'github',
+      },
+      { label: 'Ver online', href: 'https://todo-list-three-livid.vercel.app' },
+    ],
+    order: 10,
+  },
+]
+
+const seedContactLinks: (typeof contactLinks.$inferInsert)[] = [
+  {
+    label: 'LinkedIn',
+    handle: 'linkedin.com/in/mateussilvasouza',
+    href: 'https://linkedin.com/in/mateussilvasouza',
+    order: 0,
+  },
+  {
+    label: 'GitHub',
+    handle: 'github.com/mateussilvasouza',
+    href: 'https://github.com/mateussilvasouza',
+    order: 1,
+  },
+  {
+    label: 'Email',
+    handle: 'mathheussilvasouza@gmail.com',
+    href: 'mailto:mathheussilvasouza@gmail.com',
+    order: 2,
+  },
+]
+
 async function seed() {
-  const inserted = await db
+  const insertedPosts = await db
     .insert(posts)
     .values(seedPosts)
     .onConflictDoNothing({ target: posts.slug })
     .returning({ slug: posts.slug })
+  console.log(
+    `Seeded ${insertedPosts.length} post(s):`,
+    insertedPosts.map((p) => p.slug),
+  )
 
-  console.log(`Seeded ${inserted.length} post(s):`, inserted.map((p) => p.slug))
+  const existingProjects = await db
+    .select({ id: projects.id })
+    .from(projects)
+    .limit(1)
+  if (existingProjects.length === 0) {
+    const insertedProjects = await db
+      .insert(projects)
+      .values(seedProjects)
+      .returning({ title: projects.title })
+    console.log(`Seeded ${insertedProjects.length} project(s)`)
+  } else {
+    console.log('Projects already seeded, skipping.')
+  }
+
+  const existingContactLinks = await db
+    .select({ id: contactLinks.id })
+    .from(contactLinks)
+    .limit(1)
+  if (existingContactLinks.length === 0) {
+    const insertedLinks = await db
+      .insert(contactLinks)
+      .values(seedContactLinks)
+      .returning({ label: contactLinks.label })
+    console.log(`Seeded ${insertedLinks.length} contact link(s)`)
+  } else {
+    console.log('Contact links already seeded, skipping.')
+  }
 }
 
 seed()
