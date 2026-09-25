@@ -2,6 +2,8 @@ export interface Experience {
   company: string
   role: string
   period: string
+  duration: string
+  product: string
   description: string
   highlights: string[]
   technologies: string[]
@@ -12,6 +14,8 @@ export const experiences: Experience[] = [
     company: 'Galgtec',
     role: 'Desenvolvedor Full Stack',
     period: '05/2025 — 05/2026',
+    duration: '1 ano',
+    product: 'SaaS jurídico',
 
     description:
       'Atuação em SaaS jurídico para consulta de processos em tribunais de todo o Brasil.',
@@ -36,6 +40,8 @@ export const experiences: Experience[] = [
     company: 'Vai Fácil',
     role: 'Desenvolvedor Full Stack Pleno',
     period: '04/2022 — 05/2025',
+    duration: '3 anos',
+    product: 'plataforma de logística',
 
     description:
       'Atuação em plataforma logística de alto volume, com até 100 mil requisições diárias e SLA de 97%.',
