@@ -1,7 +1,9 @@
 export const profile = {
   name: 'Mateus Silva Souza',
 
-  role: 'Software Engineer',
+  shortName: 'Mateus Souza',
+
+  role: 'Full Stack Software Engineer',
 
   headline: 'Da interface à infraestrutura.',
 
@@ -10,24 +12,24 @@ export const profile = {
 
   location: 'Brasil',
 
-  availability: 'Aberto a oportunidades',
+  availability: 'Disponível para novos projetos',
 
   stats: [
     {
       value: '100k+',
-      label: 'req/dia',
+      label: 'requisições diárias em produção',
     },
     {
       value: '97%',
-      label: 'SLA',
+      label: 'SLA entregue (meta 92%)',
     },
     {
       value: '60s',
-      label: 'ganho de performance',
+      label: 'ganho em queries PostgreSQL',
     },
     {
-      value: '30%',
-      label: 'menos Lambdas',
+      value: '−30%',
+      label: 'funções Lambda',
     },
   ],
 }

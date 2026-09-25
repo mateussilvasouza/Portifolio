@@ -1,106 +1,77 @@
+import { ArrowRight } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
 import { Reveal } from '@/components/motion/Reveal'
 import { Button } from '@/components/ui/button'
+import { GithubIcon } from '@/components/ui/icons'
+import { cn } from '@/lib/utils'
 import { profile } from '@/data/profile'
-
-const pipeline = [
-  ['ReactJs', 'NextJs'],
-  ['NodeJs', 'NestJS'],
-  ['CI/CD','AWS'],
-  ['Monolithic', 'Microsservice'],
-  ['Development','Production']
-]
+import { socialLinks } from '@/data/social'
 
 export function Hero() {
-  const heroStats = profile.stats.slice(0, 3)
+  const github = socialLinks.find((link) => link.name === 'GitHub')
 
   return (
-    <section id="sobre" className="py-20 lg:py-28">
-      <Container className="grid items-center gap-16 lg:grid-cols-[1.1fr_0.9fr]">
+    <section id="sobre" className="pt-12 pb-8 lg:pt-16 lg:pb-12">
+      <Container>
         <Reveal>
-          <div className="inline-flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.14em] text-accent uppercase">
-            <span className="h-1.75 w-1.75 rounded-full bg-accent shadow-[0_0_0_6px_rgba(72,223,200,.08)]" />
-            Full Stack · Backend · Systems
+          <div className="inline-flex items-center gap-2 rounded-full border border-border py-1.5 pr-3.5 pl-2.5 text-sm text-muted-foreground">
+            <span className="size-2 rounded-full bg-lime shadow-[0_0_0_4px_var(--accent-soft)]" />
+            {profile.availability}
           </div>
 
-          <h1 className="my-5.5 text-[clamp(48px,7.2vw,82px)] leading-[0.94] tracking-[-0.075em]">
-            Da <span className="text-gradient">interface</span> à
-            infraestrutura.
+          <h1 className="my-6 font-display text-[56px] leading-[0.92] font-bold tracking-[-0.035em] lg:text-[88px]">
+            {profile.shortName}
           </h1>
 
-          <p className="max-w-[690px] text-lg text-muted-foreground">
-            Sou <strong className="font-semibold text-foreground">{profile.name}</strong>,{' '}
-            {profile.description}
-          </p>
-
-          <div className="mt-7.5 flex flex-wrap gap-2.5">
-            <Button variant="primary" size="lg" asChild>
-              <a href="#cases">Ver meus cases ↓</a>
-            </Button>
-            <Button variant="ghost" size="lg" asChild>
-              <a href="#contato">Entrar em contato</a>
-            </Button>
+          <div className="font-mono text-[13px] tracking-[0.12em] text-accent uppercase">
+            {profile.role}
           </div>
 
-          <div className="mt-10.5 flex flex-wrap gap-7">
-            {heroStats.map((stat) => (
-              <div key={stat.label}>
-                <b className="block text-[23px] tracking-[-0.05em]">
+          <p className="mt-6 mb-8 max-w-[60ch] text-xl leading-[1.55] text-muted-foreground">
+            3+ anos construindo{' '}
+            <strong className="font-medium text-foreground">
+              interfaces, APIs e microsserviços
+            </strong>{' '}
+            para produtos em produção — do suporte e dados ao frontend,
+            backend e <span className="mark-lime">arquitetura</span>.
+          </p>
+
+          <div className="flex flex-wrap gap-3">
+            <Button variant="primary" asChild className="group">
+              <a href="#projetos">
+                Ver projetos
+                <ArrowRight className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+            </Button>
+            {github && (
+              <Button variant="ghost" asChild>
+                <a href={github.url} target="_blank" rel="noopener noreferrer">
+                  <GithubIcon className="size-4" />
+                  GitHub
+                </a>
+              </Button>
+            )}
+          </div>
+
+          <div className="mt-12 grid grid-cols-2 border-t border-border sm:grid-cols-4">
+            {profile.stats.map((stat, index) => (
+              <div
+                key={stat.label}
+                className={cn(
+                  'pt-6 pr-6',
+                  index > 0 && index !== 2 && 'border-l border-border pl-6',
+                  index === 2 && 'sm:border-l sm:border-border sm:pl-6'
+                )}
+              >
+                <b className="block font-display text-[40px] leading-none tracking-[-0.03em]">
                   {stat.value}
                 </b>
-                <span className="text-[10px] tracking-[0.08em] text-muted-foreground-2 uppercase">
+                <span className="mt-2 block text-sm text-muted-foreground">
                   {stat.label}
                 </span>
               </div>
             ))}
           </div>
-        </Reveal>
-
-        <Reveal
-          className="overflow-hidden rounded-[22px] border border-border bg-card/90 shadow-[0_35px_90px_rgba(0,0,0,.38)] transition-transform duration-500 [transform:perspective(900px)_rotateY(-3deg)] hover:[transform:perspective(900px)_rotateY(0deg)]"
-        >
-          <div className="flex h-10.5 items-center gap-1.75 border-b border-border px-4">
-            <span className="h-2 w-2 rounded-full bg-[#3a4354]" />
-            <span className="h-2 w-2 rounded-full bg-[#3a4354]" />
-            <span className="h-2 w-2 rounded-full bg-[#3a4354]" />
-            <span className="ml-2 font-mono text-[10px] text-muted-foreground-2">
-              architecture.ts
-            </span>
-          </div>
-
-          {/* eslint-disable react/jsx-no-comment-textnodes, react/no-unescaped-entities -- decorative fake code snippet, not real JSX comments/prose */}
-          <div className="px-6 pt-6 pb-7.5 font-mono text-xs leading-[2] text-[#c8d0dc]">
-            <div className="text-[#657188]">// how I build</div>
-            <div>
-              <span className="text-[#9ca9ff]">const</span> engineer = {'{'}
-            </div>
-            <div>&nbsp;&nbsp;focus: <span className="text-[#65e2cf]">"reliable systems"</span>,</div>
-            <div>&nbsp;&nbsp;architecture: <span className="text-[#65e2cf]">"simple & scalable"</span>,</div>
-            <div>&nbsp;&nbsp;quality: <span className="text-[#65e2cf]">"tests + review"</span>,</div>
-            <div>&nbsp;&nbsp;delivery: <span className="text-[#65e2cf]">"continuous"</span></div>
-            <div>{'}'};</div>
-
-            <div className="my-7 grid gap-2.5">
-              {pipeline.map(([from, to]) => (
-                <div key={from} className="flex items-center gap-2.5">
-                  <span className="rounded-lg border border-border bg-white/3.5 px-2.5 py-2 text-[10px] whitespace-nowrap text-[#cbd3e0]">
-                    {from}
-                  </span>
-                  <span className="h-px flex-1 bg-gradient-to-r from-primary to-accent opacity-60" />
-                  <span className="rounded-lg border border-border bg-white/3.5 px-2.5 py-2 text-[10px] whitespace-nowrap text-[#cbd3e0]">
-                    {to}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            <div className="text-[#657188]">// production mindset</div>
-            <div>
-              <span className="text-[#9ca9ff]">return</span>{' '}
-              <span className="text-[#f2bd7b]">"build → measure → improve"</span>;
-            </div>
-          </div>
-          {/* eslint-enable react/jsx-no-comment-textnodes, react/no-unescaped-entities */}
         </Reveal>
       </Container>
     </section>
