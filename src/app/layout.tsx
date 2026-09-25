@@ -11,8 +11,16 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#080a0f',
+  themeColor: '#0b0c0e',
 }
+
+const themeInitScript = `
+  try {
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.classList.add('light')
+    }
+  } catch (e) {}
+`
 
 export default function RootLayout({
   children,
@@ -21,6 +29,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body>
         <Navbar />
         {children}
