@@ -13,7 +13,10 @@ const borderClasses = [
 
 export function Impact() {
   return (
-    <section id="impacto" className="border-t border-b bg-white/[0.018] py-[70px] sm:py-[105px]">
+    <section
+      id="impacto"
+      className="border-y border-border bg-background-2 py-[70px] sm:py-[105px]"
+    >
       <Container>
         <Reveal>
           <SectionHeading
@@ -22,10 +25,10 @@ export function Impact() {
             description="Resultados concretos da experiência profissional, não apenas uma lista de tecnologias."
           />
 
-          <div className="grid grid-cols-1 overflow-hidden rounded-[18px] border bg-white/[0.02] sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 overflow-hidden rounded-lg border border-border bg-card sm:grid-cols-2 lg:grid-cols-4">
             {metrics.map((metric, index) => (
               <div key={metric.value} className={cn('p-7', borderClasses[index])}>
-                <b className="block text-[35px] tracking-[-0.07em]">
+                <b className="block font-display text-[35px] font-bold tracking-[-0.03em]">
                   {metric.value}
                 </b>
                 <span className="text-[11px] text-muted-foreground">

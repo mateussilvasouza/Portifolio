@@ -10,11 +10,11 @@ export function SectionHeading({
   description,
 }: SectionHeadingProps) {
   return (
-    <div className="mb-10.5 max-w-[760px]">
-      <div className="text-[10px] font-black tracking-[0.16em] text-accent uppercase">
+    <div className="mb-12 max-w-[760px]">
+      <div className="font-mono text-xs tracking-[0.12em] text-accent uppercase">
         {kicker}
       </div>
-      <h2 className="mt-2.5 text-[clamp(32px,5vw,54px)] leading-none tracking-[-0.06em]">
+      <h2 className="mt-3 font-display text-[40px] leading-none font-bold tracking-[-0.03em] lg:text-[56px]">
         {title}
       </h2>
       {description && (

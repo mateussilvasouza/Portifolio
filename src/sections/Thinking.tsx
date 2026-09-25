@@ -18,12 +18,12 @@ export function Thinking() {
             {thoughts.map((thought) => (
               <div
                 key={thought.num}
-                className="rounded-[18px] border bg-gradient-to-br from-white/4 to-white/[0.012] p-7 transition-all duration-[250ms] hover:-translate-y-1 hover:border-primary/35"
+                className="rounded-lg border border-border bg-card p-7 transition-all duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:bg-background-2 hover:shadow-lift"
               >
-                <div className="font-mono text-[11px] text-accent">
+                <div className="font-mono text-xs text-accent">
                   {thought.num}
                 </div>
-                <h3 className="mt-3 mb-1.5 text-xl tracking-[-0.035em]">
+                <h3 className="mt-3 mb-1.5 font-display text-xl font-semibold tracking-[-0.02em]">
                   {thought.title}
                 </h3>
                 <p className="text-[13px] text-muted-foreground">
