@@ -1,5 +1,5 @@
 import { db } from './index'
-import { contactLinks, posts, projects } from './schema'
+import { contactLinks, experiences, posts, projects } from './schema'
 
 /**
  * Content lifted from portfolio_blog_design.html. `content` has no source
@@ -102,7 +102,7 @@ const seedPosts: (typeof posts.$inferInsert)[] = [
 
 /**
  * Cargos de empresa viram cards "company" com o resumo do produto e o
- * impacto (mesmo dado de src/data/experience.ts, condensado). Projetos de
+ * impacto (mesmo dado de seedExperiences, condensado). Projetos de
  * estudo vêm de repositórios reais no GitHub — cada `result` original virou
  * a última frase da descrição para não perder o dado.
  */
@@ -288,6 +288,54 @@ const seedProjects: (typeof projects.$inferInsert)[] = [
   },
 ]
 
+const seedExperiences: (typeof experiences.$inferInsert)[] = [
+  {
+    company: 'Galgtec',
+    role: 'Desenvolvedor Full Stack',
+    period: '05/2025 — 05/2026',
+    duration: '1 ano',
+    product: 'SaaS jurídico',
+    description:
+      'Atuação em SaaS jurídico para consulta de processos em tribunais de todo o Brasil.',
+    highlights: [
+      'Desenvolvimento de frontend React/Next.js e integração com APIs de tribunais estaduais e federais.',
+      'Redução de 30% das Lambda Functions do pipeline de deploy.',
+      'Participação em decisões de arquitetura e simplificação de abstrações.',
+    ],
+    technologies: ['React', 'Next.js', 'TypeScript', 'Node.js', 'AWS', 'Lambda'],
+    order: 0,
+  },
+  {
+    company: 'Vai Fácil',
+    role: 'Desenvolvedor Full Stack Pleno',
+    period: '04/2022 — 05/2025',
+    duration: '3 anos',
+    product: 'plataforma de logística',
+    description:
+      'Atuação em plataforma logística de alto volume, com até 100 mil requisições diárias e SLA de 97%.',
+    highlights: [
+      'Desenvolvimento e manutenção de 3 aplicações React em produção.',
+      'Desenvolvimento de microsserviços utilizando NestJS e TypeScript.',
+      'Otimização de PostgreSQL com ganhos de até 2 segundos em queries transacionais.',
+      'Otimização de views materializadas com ganhos de até 60 segundos.',
+      'Implementação de integração com seguradora parceira.',
+      'Automação da geração de romaneios e cobertura das entregas.',
+      'Mentoria de 2 analistas de suporte para diagnóstico de incidentes.',
+    ],
+    technologies: [
+      'React',
+      'Next.js',
+      'Node.js',
+      'NestJS',
+      'TypeScript',
+      'PostgreSQL',
+      'Redis',
+      'RabbitMQ',
+    ],
+    order: 1,
+  },
+]
+
 const seedContactLinks: (typeof contactLinks.$inferInsert)[] = [
   {
     label: 'LinkedIn',
@@ -332,6 +380,20 @@ async function seed() {
     console.log(`Seeded ${insertedProjects.length} project(s)`)
   } else {
     console.log('Projects already seeded, skipping.')
+  }
+
+  const existingExperiences = await db
+    .select({ id: experiences.id })
+    .from(experiences)
+    .limit(1)
+  if (existingExperiences.length === 0) {
+    const insertedExperiences = await db
+      .insert(experiences)
+      .values(seedExperiences)
+      .returning({ company: experiences.company })
+    console.log(`Seeded ${insertedExperiences.length} experience(s)`)
+  } else {
+    console.log('Experiences already seeded, skipping.')
   }
 
   const existingContactLinks = await db

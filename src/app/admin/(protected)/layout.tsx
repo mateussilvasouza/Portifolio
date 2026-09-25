@@ -20,6 +20,9 @@ export default function AdminLayout({
               <Link href="/admin/projects">Projetos</Link>
             </Button>
             <Button variant="ghost" size="sm" asChild>
+              <Link href="/admin/experience">Experiência</Link>
+            </Button>
+            <Button variant="ghost" size="sm" asChild>
               <Link href="/admin/events">Eventos</Link>
             </Button>
             <Button variant="ghost" size="sm" asChild>

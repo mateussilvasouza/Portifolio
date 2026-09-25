@@ -2,10 +2,12 @@ import { Container } from '@/components/layout/Container'
 import { Reveal } from '@/components/motion/Reveal'
 import { SectionHeading } from '@/components/SectionHeading'
 import { StackChips } from '@/components/ui/stack-chips'
-import { experiences } from '@/data/experience'
+import { getAllExperiences } from '@/db/queries'
 import { growthIntro, growthPath } from '@/data/growth'
 
-export function Experience() {
+export async function Experience() {
+  const experiences = await getAllExperiences()
+
   return (
     <section id="experiencia" className="py-[70px] sm:py-[105px]">
       <Container>
@@ -51,7 +53,7 @@ export function Experience() {
           <div className="mt-11.25 border-t border-border">
             {experiences.map((job) => (
               <article
-                key={job.company}
+                key={job.id}
                 className="grid grid-cols-1 gap-1.75 border-b border-border py-8 lg:grid-cols-[180px_1fr] lg:gap-9"
               >
                 <div className="font-mono text-[13px] text-muted-foreground">

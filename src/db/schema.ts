@@ -62,6 +62,21 @@ export const events = pgTable('events', {
   updatedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
 })
 
+export const experiences = pgTable('experiences', {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  company: text().notNull(),
+  role: text().notNull(),
+  period: text().notNull(),
+  duration: text(),
+  product: text(),
+  description: text(),
+  highlights: text().array().notNull().default([]),
+  technologies: text().array().notNull().default([]),
+  order: integer().notNull().default(0),
+  createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+})
+
 export const contactLinks = pgTable('contact_links', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   label: text().notNull(),

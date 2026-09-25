@@ -1,6 +1,13 @@
 import { asc, desc, eq } from 'drizzle-orm'
 import { db } from './index'
-import { contactLinks, events, posts, projects, settings } from './schema'
+import {
+  contactLinks,
+  events,
+  experiences,
+  posts,
+  projects,
+  settings,
+} from './schema'
 
 export function getAllPosts() {
   return db.select().from(posts).orderBy(desc(posts.publishedAt))
@@ -43,6 +50,21 @@ export function getAllEvents() {
 export async function getEventById(id: number) {
   const [event] = await db.select().from(events).where(eq(events.id, id))
   return event
+}
+
+export function getAllExperiences() {
+  return db
+    .select()
+    .from(experiences)
+    .orderBy(asc(experiences.order), asc(experiences.id))
+}
+
+export async function getExperienceById(id: number) {
+  const [experience] = await db
+    .select()
+    .from(experiences)
+    .where(eq(experiences.id, id))
+  return experience
 }
 
 export function getAllContactLinks() {
