@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Download, Lock } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/button'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { getSetting } from '@/db/queries'
 
 const navLinks = [
@@ -17,13 +18,17 @@ export async function Navbar() {
   const cvUrl = (await getSetting('cv_url')) ?? 'Currículo.pdf'
 
   return (
-    <nav className="sticky top-0 z-100 h-[72px] border-b border-border bg-background/72 backdrop-blur-xl">
-      <Container className="flex h-full items-center justify-between">
-        <Link href="/#sobre" className="font-black tracking-[-0.055em]">
-          Mateus Souza<span className="text-accent not-italic">.Dev</span>
+    <nav className="sticky top-0 z-100 h-[72px] border-b border-border bg-background/92 backdrop-blur-xl">
+      <Container className="flex h-full items-center justify-between gap-6">
+        <Link
+          href="/#sobre"
+          className="flex shrink-0 items-center gap-2 font-display text-xl font-extrabold tracking-[-0.04em]"
+        >
+          <span className="size-2.5 rounded-full bg-lime" />
+          mateus
         </Link>
 
-        <div className="hidden gap-6.5 text-xs text-muted-foreground md:flex lg:gap-8 lg:text-sm">
+        <div className="hidden gap-6.5 text-xs font-medium text-muted-foreground md:flex lg:gap-8 lg:text-sm">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -35,15 +40,17 @@ export async function Navbar() {
           ))}
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" asChild>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+
+          <Button variant="ghost" size="sm" asChild>
             <a href={cvUrl} download>
               <Download />
               Download CV
             </a>
           </Button>
 
-          <Button variant="outline" size="icon-sm" asChild aria-label="Admin">
+          <Button variant="ghost" size="icon-sm" asChild aria-label="Admin">
             <Link href="/admin">
               <Lock />
             </Link>

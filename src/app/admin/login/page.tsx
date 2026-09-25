@@ -32,7 +32,7 @@ export default async function LoginPage({
           <p className="mt-3 text-xs text-destructive">Senha incorreta.</p>
         )}
 
-        <Button type="submit" className="mt-5 w-full" variant="gradient">
+        <Button type="submit" className="mt-5 w-full" variant="primary">
           Entrar
         </Button>
       </form>

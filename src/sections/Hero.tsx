@@ -34,10 +34,10 @@ export function Hero() {
           </p>
 
           <div className="mt-7.5 flex flex-wrap gap-2.5">
-            <Button variant="gradient" size="lg" asChild>
+            <Button variant="primary" size="lg" asChild>
               <a href="#cases">Ver meus cases ↓</a>
             </Button>
-            <Button variant="outline" size="lg" asChild>
+            <Button variant="ghost" size="lg" asChild>
               <a href="#contato">Entrar em contato</a>
             </Button>
           </div>

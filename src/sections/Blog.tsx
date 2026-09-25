@@ -38,7 +38,7 @@ export async function Blog() {
           </div>
 
           <div className="mt-8 text-center">
-            <Button variant="outline" asChild>
+            <Button variant="ghost" asChild>
               <Link href="/blog">Ver todos os posts</Link>
             </Button>
           </div>

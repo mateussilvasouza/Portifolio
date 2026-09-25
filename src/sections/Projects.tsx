@@ -26,7 +26,7 @@ export function Projects() {
           </div>
 
           <div className="mt-8 text-center">
-            <Button variant="outline" asChild>
+            <Button variant="ghost" asChild>
               <Link href="/projetos">Ver todos os projetos</Link>
             </Button>
           </div>

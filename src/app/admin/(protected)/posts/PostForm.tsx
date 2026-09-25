@@ -144,7 +144,7 @@ export function PostForm({
           <div className="mt-2 flex flex-wrap items-center gap-2">
             <Button
               type="button"
-              variant="outline"
+              variant="ghost"
               size="sm"
               onClick={() => importFileInputRef.current?.click()}
             >
@@ -174,7 +174,7 @@ export function PostForm({
           />
           <Button
             type="button"
-            variant="outline"
+            variant="ghost"
             size="sm"
             className="mt-2"
             disabled={!importText.trim()}
@@ -314,7 +314,7 @@ export function PostForm({
             </label>
             <Button
               type="button"
-              variant="outline"
+              variant="ghost"
               size="xs"
               disabled={uploadingMedia}
               onClick={() => mediaFileInputRef.current?.click()}
@@ -344,7 +344,7 @@ export function PostForm({
           />
         </div>
 
-        <Button type="submit" variant="gradient">
+        <Button type="submit" variant="primary">
           Salvar
         </Button>
       </div>

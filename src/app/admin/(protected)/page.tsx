@@ -34,11 +34,11 @@ export default async function AdminDashboard() {
             </div>
 
             <div className="flex shrink-0 items-center gap-2">
-              <Button variant="outline" size="sm" asChild>
+              <Button variant="ghost" size="sm" asChild>
                 <Link href={`/admin/posts/${post.id}/edit`}>Editar</Link>
               </Button>
               <form action={deletePost.bind(null, post.id)}>
-                <Button variant="outline" size="sm" type="submit">
+                <Button variant="ghost" size="sm" type="submit">
                   Apagar
                 </Button>
               </form>
