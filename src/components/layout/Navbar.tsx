@@ -8,9 +8,8 @@ import { getSetting } from '@/db/queries'
 const navLinks = [
   { href: '/#impacto', label: 'Impacto' },
   { href: '/#pensamento', label: 'Como penso' },
-  { href: '/#cases', label: 'Cases' },
+  { href: '/#projetos', label: 'Projetos' },
   { href: '/#experiencia', label: 'Experiência' },
-  { href: '/projetos', label: 'Projetos' },
   { href: '/blog', label: 'Blog' },
 ]
 

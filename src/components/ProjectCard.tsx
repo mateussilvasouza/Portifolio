@@ -1,54 +1,87 @@
-import { ExternalLink } from 'lucide-react'
-import type { Project } from '@/data/projects'
+import { ExternalLink, Lock } from 'lucide-react'
+import type { ProjectLink, projects } from '@/db/schema'
+import { GithubIcon } from '@/components/ui/icons'
+import { StackChips } from '@/components/ui/stack-chips'
+import { Tag } from '@/components/ui/tag'
 
-export function ProjectCard({ project }: { project: Project }) {
+export function ProjectCard({
+  project,
+}: {
+  project: typeof projects.$inferSelect
+}) {
+  const links = project.links as ProjectLink[]
+
   return (
-    <article className="relative min-h-[335px] overflow-hidden rounded-[20px] border bg-gradient-to-br from-[rgba(17,23,34,.95)] to-[rgba(10,14,22,.88)] p-[29px] after:absolute after:right-[-90px] after:bottom-[-90px] after:h-[190px] after:w-[190px] after:rounded-full after:bg-accent/[0.06] after:blur-[2px] after:content-[''] max-sm:min-h-0">
-      <small className="text-[9px] font-black tracking-[0.14em] text-accent">
-        {project.category}
-      </small>
-      <h3 className="my-2.5 text-2xl tracking-[-0.045em]">{project.title}</h3>
-      <p className="max-w-[510px] text-[13px] text-muted-foreground">
+    <article className="group relative flex flex-col gap-4 rounded-lg border border-border bg-card p-6 transition-all duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:bg-background-2 hover:shadow-lift">
+      <div className="flex items-center justify-between gap-4">
+        <Tag tone={project.kind}>
+          {project.kind === 'company' ? 'Empresa' : 'Estudo'}
+        </Tag>
+        {project.period && (
+          <span className="text-sm font-medium text-muted-foreground">
+            {project.period}
+          </span>
+        )}
+      </div>
+
+      <div>
+        <h3 className="font-display text-[22px] leading-[1.2] font-semibold tracking-[-0.015em]">
+          {project.title}
+        </h3>
+        {project.kind === 'company' && (project.company || project.role) && (
+          <p className="mt-1 text-sm font-medium">
+            {project.company && (
+              <span className="text-sky">{project.company}</span>
+            )}
+            {project.company && project.role && ' · '}
+            {project.role && (
+              <span className="text-muted-foreground">{project.role}</span>
+            )}
+          </p>
+        )}
+      </div>
+
+      <p className="text-[15px] leading-[1.6] text-muted-foreground">
         {project.description}
       </p>
 
-      <div className="mt-6 flex flex-wrap gap-1.5">
-        {project.technologies.map((tech) => (
-          <span
-            key={tech}
-            className="rounded-[7px] border bg-white/2.5 px-2 py-1.5 text-[9px] text-[#c6cedb]"
-          >
-            {tech}
+      {project.stack.length > 0 && <StackChips items={project.stack} />}
+
+      {project.metricValue && (
+        <div className="flex items-baseline gap-2.5 rounded-[10px] bg-background px-3.5 py-3">
+          <b className="font-display text-2xl font-bold tracking-[-0.02em]">
+            {project.metricValue}
+          </b>
+          <span className="text-sm text-muted-foreground">
+            {project.metricLabel}
           </span>
-        ))}
-      </div>
+        </div>
+      )}
 
-      <span className="mt-5 inline-block rounded-lg bg-white/5 px-2.25 py-1.75 text-[11px] font-extrabold text-[#e8edf5]">
-        {project.result}
-      </span>
-
-      <div className="mt-5 flex flex-wrap items-center gap-4">
-        <a
-          href={project.repoUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1.5 text-[11px] font-extrabold text-accent"
-        >
-          <ExternalLink className="size-3.5" />
-          Ver repositório
-        </a>
-
-        {project.demoUrl && (
-          <a
-            href={project.demoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-[11px] font-extrabold text-foreground/90"
-          >
-            <ExternalLink className="size-3.5" />
-            Ver online
-          </a>
-        )}
+      <div className="mt-auto flex flex-wrap items-center gap-4 border-t border-border pt-4">
+        {links.length > 0 ? (
+          links.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-accent"
+            >
+              {link.kind === 'github' ? (
+                <GithubIcon className="size-3.5" />
+              ) : (
+                <ExternalLink className="size-3.5" />
+              )}
+              {link.label}
+            </a>
+          ))
+        ) : project.privateNote ? (
+          <span className="flex items-center gap-1.5 text-[13px] text-muted-foreground">
+            <Lock className="size-3.5" />
+            {project.privateNote}
+          </span>
+        ) : null}
       </div>
     </article>
   )

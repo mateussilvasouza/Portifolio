@@ -1,41 +1,47 @@
 import { Container } from '@/components/layout/Container'
 import { Reveal } from '@/components/motion/Reveal'
-import { socialLinks } from '@/data/social'
+import { getAllContactLinks } from '@/db/queries'
 
-export function Contact() {
+export async function Contact() {
+  const links = await getAllContactLinks()
+
   return (
     <section id="contato" className="py-[70px] sm:py-[105px]">
       <Container>
-        <Reveal className="rounded-[25px] border bg-card bg-[radial-gradient(circle_at_50%_0,rgba(139,156,255,.14),transparent_45%)] px-7.5 py-17.5 text-center">
-          <div className="text-[10px] font-black tracking-[0.16em] text-accent uppercase">
-            06 / contato
+        <Reveal className="grid items-end gap-8 rounded-lg border border-border bg-card px-8 py-16 lg:grid-cols-[1fr_auto]">
+          <div>
+            <div className="font-mono text-xs tracking-[0.12em] text-accent uppercase">
+              06 / contato
+            </div>
+            <h2 className="mt-3 font-display text-[44px] leading-[0.95] font-bold tracking-[-0.035em] lg:text-[64px]">
+              Vamos construir algo juntos?
+            </h2>
+            <p className="mt-4 max-w-[520px] text-sm text-muted-foreground">
+              Aberto a oportunidades e desafios envolvendo backend, sistemas
+              distribuídos, arquitetura, performance e produtos digitais.
+            </p>
           </div>
-          <h2 className="text-[clamp(35px,5vw,55px)] tracking-[-0.06em]">
-            <span className="block">Vamos construir algo</span>
-            <span className="text-gradient block">
-              que funcione de verdade?
-            </span>
-          </h2>
-          <p className="mx-auto mt-3.25 mb-6.25 max-w-[600px] text-[13px] text-muted-foreground">
-            Aberto a oportunidades e desafios envolvendo backend, sistemas
-            distribuídos, arquitetura, performance e produtos digitais.
-          </p>
-          <div className="flex flex-wrap justify-center gap-2">
-            {socialLinks.map((link) => {
-              const isEmail = link.name === 'E-mail'
+
+          <ul className="grid gap-1">
+            {links.map((link) => {
+              const isEmail = link.href.startsWith('mailto:')
               return (
-                <a
-                  key={link.name}
-                  href={link.url}
-                  target={isEmail ? undefined : '_blank'}
-                  rel={isEmail ? undefined : 'noopener'}
-                  className="rounded-[9px] border px-3 py-2.25 text-[11px] text-[#c6ceda]"
-                >
-                  {isEmail ? `✉ ${link.label}` : `${link.name} ↗`}
-                </a>
+                <li key={link.id}>
+                  <a
+                    href={link.href}
+                    target={isEmail ? undefined : '_blank'}
+                    rel={isEmail ? undefined : 'noopener noreferrer'}
+                    className="group flex items-center justify-between gap-8 border-b border-border py-3 font-medium"
+                  >
+                    {link.label}
+                    <span className="font-mono text-[13px] text-muted-foreground group-hover:text-accent">
+                      {link.handle}
+                    </span>
+                  </a>
+                </li>
               )
             })}
-          </div>
+          </ul>
         </Reveal>
       </Container>
     </section>

@@ -5,10 +5,11 @@ import { Button } from '@/components/ui/button'
 import { GithubIcon } from '@/components/ui/icons'
 import { cn } from '@/lib/utils'
 import { profile } from '@/data/profile'
-import { socialLinks } from '@/data/social'
+import { getAllContactLinks } from '@/db/queries'
 
-export function Hero() {
-  const github = socialLinks.find((link) => link.name === 'GitHub')
+export async function Hero() {
+  const contactLinks = await getAllContactLinks()
+  const github = contactLinks.find((link) => link.label === 'GitHub')
 
   return (
     <section id="sobre" className="pt-12 pb-8 lg:pt-16 lg:pb-12">
@@ -45,7 +46,7 @@ export function Hero() {
             </Button>
             {github && (
               <Button variant="ghost" asChild>
-                <a href={github.url} target="_blank" rel="noopener noreferrer">
+                <a href={github.href} target="_blank" rel="noopener noreferrer">
                   <GithubIcon className="size-4" />
                   GitHub
                 </a>

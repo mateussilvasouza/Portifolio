@@ -1,32 +1,31 @@
 import { Container } from '@/components/layout/Container'
-import { ProjectCard } from '@/components/ProjectCard'
-import { projects } from '@/data/projects'
+import { ProjectsExplorer } from '@/components/ProjectsExplorer'
+import { getAllProjects } from '@/db/queries'
 
 export const metadata = {
   title: 'Projetos — Mateus Silva Souza',
   description:
-    'Repositórios de estudo — projetos pessoais feitos pra aprender e testar coisas na prática, já que trabalho de empresa não pode ser compartilhado.',
+    'Projetos de estudo com código aberto e projetos em empresas com o impacto que posso divulgar.',
 }
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projects = await getAllProjects()
+
   return (
     <Container className="py-16 sm:py-24">
-      <div className="text-[10px] font-black tracking-[0.14em] text-accent uppercase">
+      <div className="font-mono text-xs tracking-[0.12em] text-accent uppercase">
         Projetos
       </div>
-      <h1 className="my-5 max-w-[850px] text-[clamp(40px,6vw,72px)] leading-[0.96] tracking-[-0.065em]">
-        O que eu construo <span className="text-gradient">por conta própria.</span>
+      <h1 className="my-5 max-w-[850px] font-display text-[clamp(40px,6vw,64px)] leading-[0.96] font-bold tracking-[-0.03em]">
+        Coisas que <span className="mark-lime">construí</span>.
       </h1>
       <p className="max-w-[700px] text-lg text-muted-foreground">
-        Projetos de empresa não podem ser compartilhados aqui — o que fica são
-        os repositórios de estudo, feitos pra aprender e testar coisas na
-        prática.
+        Projetos de estudo têm código aberto. Projetos em empresas são
+        produtos públicos — o código é privado, então mostro o impacto.
       </p>
 
-      <div className="mt-11 grid grid-cols-1 gap-4 lg:grid-cols-2">
-        {projects.map((project) => (
-          <ProjectCard key={project.title} project={project} />
-        ))}
+      <div className="mt-11">
+        <ProjectsExplorer projects={projects} />
       </div>
     </Container>
   )
