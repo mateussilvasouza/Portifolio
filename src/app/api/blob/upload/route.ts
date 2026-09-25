@@ -17,6 +17,7 @@ export async function POST(request: Request) {
         return {
           allowedContentTypes: ['image/*', 'video/*', 'application/pdf'],
           maximumSizeInBytes: 50 * 1024 * 1024,
+          addRandomSuffix: true,
         }
       },
     })
