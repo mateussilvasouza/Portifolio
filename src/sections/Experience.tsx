@@ -14,7 +14,7 @@ export async function Experience() {
         <Reveal>
           <SectionHeading
             kicker="05 / experiência"
-            title="De suporte a Full Stack Pleno."
+            title="De suporte a Full Stack."
             description="Uma evolução rápida, atravessando diferentes camadas do produto e da engenharia."
           />
 
