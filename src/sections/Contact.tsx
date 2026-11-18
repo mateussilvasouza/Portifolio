@@ -1,17 +1,17 @@
 import { Container } from '@/components/layout/Container'
 import { Reveal } from '@/components/motion/Reveal'
-import { getAllContactLinks } from '@/db/queries'
+import { getContactLinks } from '@/data/contact'
 
-export async function Contact() {
-  const links = await getAllContactLinks()
+export function Contact() {
+  const links = getContactLinks()
 
   return (
-    <section id="contato" className="py-[70px] sm:py-[105px]">
+    <section id="contato" className="py-[70px] sm:py-24">
       <Container>
         <Reveal className="grid items-end gap-8 rounded-lg border border-border bg-card px-8 py-16 lg:grid-cols-[1fr_auto]">
           <div>
             <div className="font-mono text-xs tracking-[0.12em] text-accent uppercase">
-              08 / contato
+              07 / Contato
             </div>
             <h2 className="mt-3 font-display text-[44px] leading-[0.95] font-bold tracking-[-0.035em] lg:text-[64px]">
               Vamos construir algo juntos?
@@ -26,7 +26,7 @@ export async function Contact() {
             {links.map((link) => {
               const isEmail = link.href.startsWith('mailto:')
               return (
-                <li key={link.id}>
+                <li key={link.href}>
                   <a
                     href={link.href}
                     target={isEmail ? undefined : '_blank'}

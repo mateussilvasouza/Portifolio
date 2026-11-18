@@ -1,5 +1,5 @@
 import { ExternalLink, Lock } from 'lucide-react'
-import type { ProjectLink, projects } from '@/db/schema'
+import type { Project } from '@/data/projects'
 import { GithubIcon } from '@/components/ui/icons'
 import { StackChips } from '@/components/ui/stack-chips'
 import { Tag } from '@/components/ui/tag'
@@ -7,9 +7,9 @@ import { Tag } from '@/components/ui/tag'
 export function ProjectCard({
   project,
 }: {
-  project: typeof projects.$inferSelect
+  project: Project
 }) {
-  const links = project.links as ProjectLink[]
+  const links = project.links
 
   return (
     <article className="group relative flex flex-col gap-4 rounded-lg border border-border bg-card p-6 transition-all duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:bg-background-2 hover:shadow-lift">

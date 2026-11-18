@@ -1,23 +1,20 @@
 import Link from 'next/link'
-import { Download, Lock } from 'lucide-react'
+import { Download } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
-import { getSetting } from '@/db/queries'
 
 const navLinks = [
-  { href: '/#impacto', label: 'Impacto' },
-  { href: '/#pensamento', label: 'Como penso' },
-  { href: '/#projetos', label: 'Projetos' },
+  { href: '/#sobre', label: 'Sobre' },
   { href: '/#experiencia', label: 'Experiência' },
-  { href: '/#eventos', label: 'Eventos' },
-  { href: '/#fotos', label: 'Fotos' },
-  { href: '/blog', label: 'Blog' },
+  { href: '/#projetos', label: 'Projetos' },
+  { href: '/#estudando', label: 'Estudando' },
+  { href: '/#canal', label: 'Canal' },
 ]
 
-export async function Navbar() {
-  const cvUrl = (await getSetting('cv_url')) ?? 'Currículo.pdf'
+const cvUrl = '/Currículo.pdf'
 
+export function Navbar() {
   return (
     <nav className="sticky top-0 z-100 h-[72px] border-b border-border bg-background/92 backdrop-blur-xl">
       <Container className="flex h-full items-center justify-between gap-6">
@@ -30,12 +27,15 @@ export async function Navbar() {
         </Link>
 
         <div className="hidden gap-6.5 text-xs font-medium text-muted-foreground md:flex lg:gap-8 lg:text-sm">
-          {navLinks.map((link) => (
+          {navLinks.map((link, index) => (
             <Link
               key={link.href}
               href={link.href}
               className="transition-colors hover:text-foreground"
             >
+              <span className="mr-1.5 font-mono text-[11px] text-accent">
+                {String(index + 1).padStart(2, '0')}
+              </span>
               {link.label}
             </Link>
           ))}
@@ -44,17 +44,15 @@ export async function Navbar() {
         <div className="flex items-center gap-3">
           <ThemeToggle />
 
-          <Button variant="ghost" size="sm" asChild>
+          <Button variant="ghost" size="sm" asChild className="hidden sm:inline-flex">
             <a href={cvUrl} download>
               <Download />
               Download CV
             </a>
           </Button>
 
-          <Button variant="ghost" size="icon-sm" asChild aria-label="Admin">
-            <Link href="/admin">
-              <Lock />
-            </Link>
+          <Button variant="primary" size="sm" asChild>
+            <Link href="/#contato">Contato</Link>
           </Button>
         </div>
       </Container>
