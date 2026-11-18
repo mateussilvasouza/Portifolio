@@ -1,8 +1,6 @@
 # mateus.dev
 
-Portfólio pessoal de [Mateus Silva Souza](https://github.com/mateussilvasouza) — Software Engineer full stack. Além de ser o site que apresenta minha experiência, é também um projeto de frontend "de verdade": stack atual, arquitetura pensada de propósito, e decisões documentadas — não só um one-pager estático.
-
-O site tem duas partes: as seções institucionais (hero, cases, experiência, stack, contato) e um **blog com CMS próprio** — editor de markdown com upload de imagem/vídeo, autenticação e persistência em Postgres.
+Portfólio pessoal de [Mateus Silva Souza](https://github.com/mateussilvasouza), desenvolvedor Full Stack. A carreira contada como uma trilha de estudos: de estagiário de suporte a dev pleno, com as entregas reais de cada empresa, os projetos, o que estou estudando agora e os vídeos do canal.
 
 ## Stack
 
@@ -10,42 +8,36 @@ O site tem duas partes: as seções institucionais (hero, cases, experiência, s
 | --- | --- |
 | Framework | [Next.js 16](https://nextjs.org) (App Router, Turbopack) |
 | Linguagem | TypeScript |
-| Estilo | [Tailwind CSS v4](https://tailwindcss.com) + [shadcn/ui](https://ui.shadcn.com) |
+| Estilo | [Tailwind CSS v4](https://tailwindcss.com) + componentes no estilo [shadcn/ui](https://ui.shadcn.com) |
 | Animação | [Motion](https://motion.dev) |
-| Banco | [Neon](https://neon.tech) (Postgres serverless) + [Drizzle ORM](https://orm.drizzle.team) |
-| Armazenamento de mídia | [Vercel Blob](https://vercel.com/docs/vercel-blob) |
-| Markdown | `react-markdown` + `remark-gfm` + `gray-matter` |
-| Deploy | Vercel, com migrations do banco via GitHub Actions |
+| Vídeos | [YouTube Data API v3](https://developers.google.com/youtube/v3) |
+| Deploy | Vercel |
 
 ## Arquitetura e decisões
 
-Algumas escolhas que valem explicar (não só o "o quê", mas o "por quê"):
-
-- **Migração de Vite para Next.js.** O projeto começou como SPA em Vite. Quando o blog precisou de um backend (rotas de API, Server Actions, banco de dados), migrei pra Next.js App Router em vez de manter Vite + um backend separado — um único runtime, sem duplicar camada de HTTP.
-- **Server Components por padrão, Client Component só onde precisa.** As seções da home são Server Components estáticos; só o `Reveal` (scroll-reveal via Motion) e o editor de posts (que precisa de estado local pro preview ao vivo) cruzam a fronteira pra `"use client"`. Bundle client menor, sem esforço extra.
-- **Drizzle + driver HTTP do Neon**, não uma conexão TCP tradicional — API de rotas do Next.js roda em funções serverless, então cada query como um `fetch()` evita o overhead de gerenciar pool de conexão.
-- **Autenticação própria, sem biblioteca.** É uso de uma pessoa só (eu, pra escrever posts) — em vez de Auth.js/NextAuth, é uma senha via variável de ambiente e um cookie de sessão assinado com HMAC (`node:crypto`), verificado tanto no `proxy.ts` (protege as rotas `/admin`) quanto dentro de cada Server Action que mexe no banco (a própria documentação do Next é explícita que Server Actions não são cobertas pelo matcher do Proxy — cada uma precisa se proteger sozinha).
-- **Editor de markdown com import de frontmatter.** Dá pra escrever o post inteiro manualmente, ou colar/importar um `.md` com frontmatter YAML (`gray-matter`) que preenche o formulário — os campos que faltarem (slug, resumo, tempo de leitura) saem com a mesma lógica de sugestão que o formulário manual já usa.
-- **Upload de mídia direto do navegador pro Vercel Blob**, sem passar pela função serverless (evita o limite de tamanho do body da function). Imagem e vídeo usam a mesma sintaxe de markdown (`![alt](url)`) — quem renderiza decide se é `<img>` ou `<video>` pela extensão do arquivo, sem sintaxe nova pra lembrar.
-- **ISR + `revalidatePath` em vez de `force-dynamic`** nas páginas públicas do blog (`/`, `/blog`, `/blog/[slug]`). Elas são lidas muito mais do que escritas, então ficam estáticas e cacheadas — cada mutação de post (criar/editar/apagar) invalida exatamente essas rotas, sem precisar de rebuild pra aparecer no site.
-- **Migrations do Drizzle rodando via GitHub Actions** a cada push pra `main`, contra o Neon real — independente do deploy da Vercel (que roda em paralelo, disparado pelo mesmo push).
+- **Site estático, sem banco.** Todo o conteúdo fica em arquivos TypeScript em `src/data/`. Para mudar um texto, um projeto ou uma experiência, edite o arquivo e faça o push: a Vercel publica sozinha.
+- **Server Components por padrão.** Só o `Reveal` (animação ao rolar), o filtro de projetos e o seletor de tema são Client Components.
+- **YouTube só no servidor, com cache.** A seção "Do canal" busca os 3 vídeos mais recentes no servidor, então a chave da API nunca chega ao navegador. As respostas ficam em cache por 6 horas (ISR), o que dá poucas chamadas por dia, bem dentro da cota gratuita. A playlist de uploads é derivada do id do canal (`UC…` → `UU…`), sem gastar uma chamada extra. Sem chave, sem vídeos ou com erro na API, a seção mostra o estado "Em breve".
+- **Páginas de empresa geradas no build.** `/experiencia/[slug]` é gerada a partir de `src/data/deliveries.ts` (`generateStaticParams`).
 
 ## Rodando localmente
 
 ```bash
 npm install
-cp .env.example .env.local  # preencher as variáveis abaixo
+cp .env.example .env.local  # opcional: só para a seção do YouTube
 npm run dev
 ```
 
-### Variáveis de ambiente (`.env.local`)
+### Variáveis de ambiente (todas opcionais)
 
 | Variável | Descrição |
 | --- | --- |
-| `DATABASE_URL` | Connection string do Neon (Postgres) |
-| `ADMIN_PASSWORD` | Senha pra entrar em `/admin` |
-| `SESSION_SECRET` | Chave aleatória usada pra assinar o cookie de sessão (`openssl rand -hex 32`) |
-| `BLOB_READ_WRITE_TOKEN` | Token do Vercel Blob (Storage → Create Database → Blob, **com acesso público**) |
+| `YOUTUBE_API_KEY` | Chave da YouTube Data API v3 (Google Cloud Console → APIs → YouTube Data API v3 → Credenciais). Restrinja a chave a essa API. |
+| `YOUTUBE_CHANNEL_ID` | Id do canal, começa com `UC` (YouTube Studio → Configurações → Canal → Configurações avançadas). |
+| `YOUTUBE_CHANNEL_URL` | Link público do canal, por exemplo `https://www.youtube.com/@seucanal`. Liga o botão de inscrição e o YouTube nos contatos. |
+| `YOUTUBE_CHANNEL_DESCRIPTION` | Uma frase sobre o tema do canal, exibida ao lado do título da seção. |
+
+Na Vercel, cadastre as mesmas variáveis em Settings → Environment Variables.
 
 ### Scripts
 
@@ -54,32 +46,31 @@ npm run dev
 | `npm run dev` | Servidor de desenvolvimento |
 | `npm run build` / `npm run start` | Build e servidor de produção |
 | `npm run lint` | ESLint |
-| `npm run db:generate` | Gera uma migration a partir do schema (`src/db/schema.ts`) |
-| `npm run db:migrate` | Aplica migrations pendentes contra o `DATABASE_URL` |
-| `npm run db:seed` | Popula o banco com posts de exemplo |
-| `npm run db:studio` | Abre o Drizzle Studio (UI pra inspecionar o banco) |
 
-## Deploy
+## Onde editar o conteúdo
 
-- **App**: Vercel, deploy automático a cada push pra `main`.
-- **Migrations**: `.github/workflows/migrate.yml` roda `db:migrate` contra o Neon a cada push, usando o secret `DATABASE_URL` cadastrado no GitHub (Settings → Secrets and variables → Actions).
-- Variáveis de ambiente de produção (`DATABASE_URL`, `ADMIN_PASSWORD`, `SESSION_SECRET`, `BLOB_READ_WRITE_TOKEN`) precisam ser cadastradas nas configurações do projeto na Vercel.
+| Arquivo | O que tem |
+| --- | --- |
+| `src/data/profile.ts` | Nome, disponibilidade, métricas, card "Minha trilha" e formação |
+| `src/data/experiences.ts` | Empresas e as entregas numeradas da home |
+| `src/data/deliveries.ts` | Páginas de detalhe por empresa (hoje, a Vai Fácil com 10 entregas) |
+| `src/data/projects.ts` | Projetos de empresas e de estudo |
+| `src/data/studying.ts` | Seção "Em estudo" |
+| `src/data/skills.ts` | Seção Stack |
+| `src/data/contact.ts` | Links de contato. `SHOW_PHONE` liga ou desliga o WhatsApp no site |
+| `public/Currículo.pdf` | PDF do botão "Download CV" |
 
 ## Estrutura
 
 ```
 src/
 ├─ app/
-│  ├─ page.tsx               # home — monta as seções institucionais em ordem
-│  ├─ layout.tsx              # layout raiz (Navbar, Footer, metadata)
-│  ├─ blog/                  # listagem pública, busca/filtro, leitura por slug
-│  ├─ admin/(protected)/     # dashboard e editor de posts, atrás de login
-│  ├─ admin/login/           # tela de login
-│  └─ api/blob/upload/       # rota de upload pro Vercel Blob
-├─ components/                # componentes compartilhados (UI, cards, markdown)
-├─ sections/                  # seções da home (Hero, Cases, Experience, etc.)
-├─ data/                      # conteúdo estático das seções institucionais
-├─ db/                        # schema, client e queries do Drizzle
-├─ lib/                       # helpers (sessão, slugify, markdown, tempo de leitura)
-└─ proxy.ts                   # protege as rotas /admin
+│  ├─ page.tsx                 # home: monta as seções em ordem
+│  ├─ layout.tsx               # layout raiz (Navbar, Footer, metadata)
+│  ├─ experiencia/[slug]/      # página de detalhe por empresa
+│  └─ projetos/                # todos os projetos com filtro
+├─ components/                 # componentes compartilhados (UI, cards, layout)
+├─ sections/                   # seções da home (Hero, Experience, Channel, etc.)
+├─ data/                       # todo o conteúdo do site
+└─ lib/                        # helpers (YouTube, slugify, utils)
 ```

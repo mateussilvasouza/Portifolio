@@ -1,6 +1,6 @@
 import { Container } from '@/components/layout/Container'
 import { ProjectsExplorer } from '@/components/ProjectsExplorer'
-import { getAllProjects } from '@/db/queries'
+import { projects } from '@/data/projects'
 
 export const metadata = {
   title: 'Projetos — Mateus Silva Souza',
@@ -8,9 +8,7 @@ export const metadata = {
     'Projetos de estudo com código aberto e projetos em empresas com o impacto que posso divulgar.',
 }
 
-export default async function ProjectsPage() {
-  const projects = await getAllProjects()
-
+export default function ProjectsPage() {
   return (
     <Container className="py-16 sm:py-24">
       <div className="font-mono text-xs tracking-[0.12em] text-accent uppercase">

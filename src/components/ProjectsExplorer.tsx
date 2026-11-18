@@ -1,11 +1,10 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import type { projects } from '@/db/schema'
 import { ProjectCard } from '@/components/ProjectCard'
 import { ProjectTabs } from '@/components/ProjectTabs'
 
-type Project = typeof projects.$inferSelect
+import type { Project } from '@/data/projects'
 
 export function ProjectsExplorer({ projects }: { projects: Project[] }) {
   const [filter, setFilter] = useState<'all' | 'company' | 'study'>('all')
@@ -42,7 +41,7 @@ export function ProjectsExplorer({ projects }: { projects: Project[] }) {
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+          <ProjectCard key={project.title} project={project} />
         ))}
       </div>
     </div>

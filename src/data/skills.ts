@@ -1,100 +1,35 @@
 export interface SkillGroup {
   title: string
-  description: string
   skills: string[]
 }
 
 export const skillGroups: SkillGroup[] = [
   {
-    title: 'Frontend',
-
-    description:
-      'Interfaces e aplicações web em produção, da experiência visual à integração com o backend.',
-
-    skills: [
-      'React',
-      'Next.js',
-      'TypeScript',
-      'Tailwind CSS',
-      'Styled Components',
-      'Material UI',
-    ],
+    title: 'Linguagens e frameworks',
+    skills: ['Node.js', 'NestJS', 'Next.js', 'React', 'TypeScript', 'JavaScript', 'Redux', 'React Query', 'Tailwind', 'shadcn/ui'],
   },
-
-  {
-    title: 'Backend',
-
-    description:
-      'APIs, regras de negócio, integrações e serviços distribuídos.',
-
-    skills: [
-      'Node.js',
-      'NestJS',
-      'TypeScript',
-      'REST',
-      'RabbitMQ',
-    ],
-  },
-
-  {
-    title: 'Full Stack',
-
-    description:
-      'Conexão entre interface, APIs, dados e infraestrutura para entregar o produto completo.',
-
-    skills: [
-      'React ↔ APIs',
-      'Next.js',
-      'NestJS',
-      'TypeScript',
-    ],
-  },
-
   {
     title: 'Arquitetura',
-
-    description:
-      'Estrutura para evolução sustentável e redução de acoplamento.',
-
-    skills: [
-      'Microsserviços',
-      'DDD',
-      'SOLID',
-      'Clean Architecture',
-      'Event-Driven',
-    ],
+    skills: ['Microsserviços', 'Clean Architecture', 'SOLID', 'DDD', 'Orientada a eventos'],
   },
-
   {
-    title: 'Dados',
-
-    description:
-      'Modelagem, persistência e investigação de gargalos de performance.',
-
-    skills: [
-      'PostgreSQL',
-      'MySQL',
-      'MongoDB',
-      'Redis',
-    ],
+    title: 'APIs e integrações',
+    skills: ['REST', 'RabbitMQ', 'Joi', 'Zod', 'APIs de terceiros'],
   },
-
   {
-    title: 'Cloud & Qualidade',
-
-    description:
-      'Entrega, infraestrutura e práticas para software confiável.',
-
-    skills: [
-      'AWS',
-      'Lambda',
-      'Step Functions',
-      'S3',
-      'API Gateway',
-      'Docker',
-      'TDD',
-      'Testes',
-      'CI/CD',
-    ],
+    title: 'Banco de dados',
+    skills: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Prisma', 'TypeORM', 'Sequelize'],
+  },
+  {
+    title: 'DevOps e cloud',
+    skills: ['Docker', 'GitHub Actions', 'CI/CD', 'AWS Lambda', 'Step Functions', 'S3', 'EC2', 'EKS', 'CloudWatch'],
+  },
+  {
+    title: 'Dados e automação',
+    skills: ['N8N', 'Looker', 'Relatórios PostgreSQL'],
+  },
+  {
+    title: 'Testes e qualidade',
+    skills: ['TDD', 'Jest', 'Vitest', 'Testes de integração', 'Code Review'],
   },
 ]
