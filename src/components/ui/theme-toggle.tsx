@@ -13,8 +13,9 @@ function getSnapshot() {
   return document.documentElement.classList.contains('light')
 }
 
+/** O tema claro é o padrão: o HTML já sai com a classe `light`. */
 function getServerSnapshot() {
-  return false
+  return true
 }
 
 export function ThemeToggle() {
