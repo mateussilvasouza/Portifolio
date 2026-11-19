@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
 import { Reveal } from '@/components/motion/Reveal'
 import { SectionHeading } from '@/components/SectionHeading'
@@ -84,6 +84,23 @@ export function Experience() {
                       <div className="mt-4">
                         <StackChips items={job.technologies} />
                       </div>
+                    )}
+                    {job.links && job.links.length > 0 && (
+                      <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2" aria-label={`Produtos da ${job.company}`}>
+                        {job.links.map((link) => (
+                          <li key={link.href}>
+                            <a
+                              href={link.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 font-semibold text-accent hover:underline hover:underline-offset-4"
+                            >
+                              {link.label}
+                              <ArrowUpRight className="size-4" />
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
                     )}
                     {detail && (
                       <Link
