@@ -19,6 +19,8 @@ export interface CompanyDetail {
   arcNote: string
   techSheet: { label: string; value: string }[]
   deliveries: Delivery[]
+  /** Nota sobre o acesso ao produto e ao código. */
+  privacyNote: string
   next?: { label: string; href: string }
 }
 
@@ -47,6 +49,7 @@ export const companyDetails: CompanyDetail[] = [
       { label: 'Automação', value: 'N8N' },
       { label: 'Processo', value: 'Scrum · Kanban · Jira' },
     ],
+    privacyNote: 'Produto interno · código privado',
     next: { label: 'Ver Galgtec', href: '/#experiencia' },
     deliveries: [
       { area: 'Integração', title: 'Integração com seguradora, do zero', description: 'Geração de romaneios com dados de carga e cobertura automatizada das entregas, eliminando um processo manual e reduzindo risco operacional.', stack: ['NestJS', 'APIs externas'] },
