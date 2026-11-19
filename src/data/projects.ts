@@ -32,10 +32,13 @@ export const projects: Project[] = [
     description:
       'Frontend em React/Next.js e integrações com APIs de tribunais brasileiros; simplificação da arquitetura serverless.',
     stack: ['Next.js', 'React', 'AWS Lambda'],
-    links: [],
+    links: [
+      { label: 'GalgJur', href: 'https://galgjur.com.br/' },
+      { label: 'Galgtec', href: 'https://galgtec.com.br/' },
+    ],
     metricValue: '−30%',
     metricLabel: 'funções Lambda',
-    privateNote: 'Código privado — produto público',
+    privateNote: 'Código privado',
   },
   {
     kind: 'company',

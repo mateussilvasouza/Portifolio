@@ -59,8 +59,7 @@ export function ProjectCard({
       )}
 
       <div className="mt-auto flex flex-wrap items-center gap-4 border-t border-border pt-4">
-        {links.length > 0 ? (
-          links.map((link) => (
+        {links.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -75,13 +74,13 @@ export function ProjectCard({
               )}
               {link.label}
             </a>
-          ))
-        ) : project.privateNote ? (
+          ))}
+        {project.privateNote && (
           <span className="flex items-center gap-1.5 text-[13px] text-muted-foreground">
             <Lock className="size-3.5" />
             {project.privateNote}
           </span>
-        ) : null}
+        )}
       </div>
     </article>
   )

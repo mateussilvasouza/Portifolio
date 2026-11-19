@@ -14,6 +14,8 @@ export interface Experience {
   /** A home mostra as 4 primeiras. A lista completa fica em data/deliveries.ts. */
   highlights: Highlight[]
   technologies?: string[]
+  /** Páginas públicas dos produtos da empresa. */
+  links?: { label: string; href: string }[]
 }
 
 /** Seção "Experiência", da mais recente para a mais antiga. */
@@ -31,6 +33,10 @@ export const experiences: Experience[] = [
       { title: 'APIs de tribunais', text: 'estaduais e federais: autenticação, schemas diferentes e falhas parciais sem perda de dados.' },
     ],
     technologies: ['Next.js', 'React', 'AWS Lambda', 'Kanban · Trello'],
+    links: [
+      { label: 'GalgJur', href: 'https://galgjur.com.br/' },
+      { label: 'Galgtec', href: 'https://galgtec.com.br/' },
+    ],
   },
   {
     company: 'Vai Fácil',
