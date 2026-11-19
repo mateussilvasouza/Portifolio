@@ -16,6 +16,8 @@ export interface Project {
   metricValue?: string
   metricLabel?: string
   privateNote?: string
+  /** Vídeo do produto, exibido no topo do card. */
+  video?: { src: string; title: string }
 }
 
 /**
@@ -36,6 +38,7 @@ export const projects: Project[] = [
       { label: 'GalgJur', href: 'https://galgjur.com.br/' },
       { label: 'Galgtec', href: 'https://galgtec.com.br/' },
     ],
+    video: { src: 'https://galgjur.com.br/assets/hro.mp4', title: 'GalgJur: visão geral' },
     metricValue: '−30%',
     metricLabel: 'funções Lambda',
     privateNote: 'Código privado',

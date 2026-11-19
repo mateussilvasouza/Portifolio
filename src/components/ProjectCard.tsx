@@ -13,6 +13,20 @@ export function ProjectCard({
 
   return (
     <article className="group relative flex flex-col gap-4 rounded-lg border border-border bg-card p-6 transition-all duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:bg-background-2 hover:shadow-lift">
+      {project.video && (
+        <video
+          src={project.video.src}
+          title={project.video.title}
+          aria-label={project.video.title}
+          className="-mx-2 -mt-2 aspect-video w-[calc(100%+1rem)] rounded-md border border-border bg-background-2 object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          controls
+          preload="metadata"
+        />
+      )}
       <div className="flex items-center justify-between gap-4">
         <Tag tone={project.kind}>
           {project.kind === 'company' ? 'Empresa' : 'Estudo'}
