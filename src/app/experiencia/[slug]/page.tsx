@@ -148,7 +148,7 @@ export default async function CompanyPage({
             {detail.next && (
               <div className="flex flex-col gap-2 rounded-lg border border-border bg-card p-6">
                 <span className="text-[13px] text-muted-foreground">
-                  Código privado · produto público
+                  {detail.privacyNote}
                 </span>
                 <Button variant="primary" size="sm" asChild className="self-start">
                   <Link href={detail.next.href}>

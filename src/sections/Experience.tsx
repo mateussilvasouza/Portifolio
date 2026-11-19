@@ -112,6 +112,30 @@ export function Experience() {
                       </Link>
                     )}
                   </div>
+
+                  {job.videos && job.videos.length > 0 && (
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-2">
+                      {job.videos.map((video) => (
+                        <figure key={video.src} className="m-0">
+                          <video
+                            src={video.src}
+                            title={video.title}
+                            aria-label={video.title}
+                            className="aspect-video w-full rounded-md border border-border bg-background-2 object-cover"
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            controls
+                            preload="metadata"
+                          />
+                          <figcaption className="mt-2 font-mono text-xs text-muted-foreground">
+                            {video.title}
+                          </figcaption>
+                        </figure>
+                      ))}
+                    </div>
+                  )}
                 </article>
               )
             })}

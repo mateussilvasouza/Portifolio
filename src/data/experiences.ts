@@ -16,6 +16,8 @@ export interface Experience {
   technologies?: string[]
   /** Páginas públicas dos produtos da empresa. */
   links?: { label: string; href: string }[]
+  /** Vídeos do produto, exibidos abaixo das entregas. */
+  videos?: { src: string; title: string }[]
 }
 
 /** Seção "Experiência", da mais recente para a mais antiga. */
@@ -36,6 +38,10 @@ export const experiences: Experience[] = [
     links: [
       { label: 'GalgJur', href: 'https://galgjur.com.br/' },
       { label: 'Galgtec', href: 'https://galgtec.com.br/' },
+    ],
+    videos: [
+      { src: 'https://galgjur.com.br/assets/hro.mp4', title: 'GalgJur: visão geral' },
+      { src: 'https://galgjur.com.br/assets/galgjur-agenda-1080p.mp4', title: 'GalgJur: módulo Agenda' },
     ],
   },
   {

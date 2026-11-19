@@ -52,7 +52,7 @@ export const projects: Project[] = [
     links: [],
     metricValue: '100k',
     metricLabel: 'requisições por dia · SLA 97%',
-    privateNote: 'Código privado — produto público',
+    privateNote: 'Produto interno · código privado',
   },
   {
     kind: 'study',
