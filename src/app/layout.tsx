@@ -11,13 +11,13 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0b0c0e',
+  themeColor: '#f4f2ec',
 }
 
 const themeInitScript = `
   try {
-    if (localStorage.getItem('theme') === 'light') {
-      document.documentElement.classList.add('light')
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.remove('light')
     }
   } catch (e) {}
 `
@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" className="light" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
